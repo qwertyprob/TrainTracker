@@ -57,11 +57,3 @@ The sample JSON file includes the following key fields:
 - Correct handling of simulated real-time updates
 
 ---
-
-## Timeline
-The project should be completed within **2 weeks** (until **October 14**).
-
----
-
-## Support
-For questions or clarifications, please reply to the original email.  
