@@ -4,6 +4,7 @@ public class StationEntity
 {
     public int Id { get; set; }
     public string StationTitle { get; set; }
+    
     //Можно добавить данные..
     
     //Связь 1:1 TrainEntity

@@ -7,7 +7,7 @@ public class TrainEntity
 {
     public long Id { get; set; } //data[0].id
     
-    public int Name { get; set; } //data[0].name
+    public string Name { get; set; } //data[0].name
     
     public int Number { get; set; } //data[0].returnValue.train 
     
