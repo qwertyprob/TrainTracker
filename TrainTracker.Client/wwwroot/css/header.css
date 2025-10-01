@@ -21,13 +21,15 @@ header {
     background-color: white;
     padding: 0.5rem;
     box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-    transition: 0.8s;
+    transition: all 0.8s ease;
 }
 
     .img-container:hover,
     .img-container:focus,
     .img-container:active{
-        background-color: var(--ligt-color);
+        background-color: floralwhite !important;
+        transform: translateY(-5px) !important;
+
     }
 
 .logo {

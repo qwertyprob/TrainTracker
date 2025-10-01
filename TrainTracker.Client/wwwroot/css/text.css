@@ -1,0 +1,10 @@
+.view-text{
+    font-weight: bolder;
+    color: var(--header-color) !important;
+}
+.bold{
+    font-weight: 600 !important;
+}
+.hidde-text{
+    font-size: 0;
+}

@@ -2,11 +2,43 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="container mt-5">
-    <div class="row bg-light rounded d-flex justify-content-center align-items-center">
-            @* @await Html.PartialAsync("Components/Cards") *@
-            фывфывыфв
+<div class="container">
+    
+    <div class="row mt-3">
+        <div class="d-flex bg-white rounded mt-4">
+            <div class="col-6 ">
+                <div class=" d-flex justify-content-start align-items-center p-2 py-3 mx-2 gap-2">
+                    <h2 class="view-text">View:</h2>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex justify-content-end align-items-center p-2 py-3 mx-2 gap-3">
+                    <button class="btn btn-secondary active" id="tableBtn">
+                        <i class="bi bi-table"></i> <span class="bold" id="tableTxt">Table</span>
+                    </button>
+                    <button class="btn btn-secondary" id="cardsBtn">
+                        <i class="bi bi-grid-3x3-gap"></i> <span class="bold" id="cardsTxt">Cards</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
         
     </div>
-</div>
+    @* CARDS *@
+    <div class="row mt-3 hidden" id="cardsRow">
+        <div class="bg-white rounded">
+            @await Html.PartialAsync("Components/Cards")
+        </div>
+    </div>
 
+    @* TABLE *@
+    <div class="row mt-3" id="tableRow">
+        <div class="bg-white rounded">
+            @await Html.PartialAsync("Components/Table")
+        </div>
+    </div>
+    
+</div>
+@* View Table/Cards *@
+<script src="js/toggleShow.js"></script>
