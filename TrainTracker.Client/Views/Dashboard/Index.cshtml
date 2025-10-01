@@ -5,14 +5,14 @@
 <div class="container">
     
     <div class="row mt-3">
-        <div class="d-flex bg-white rounded mt-4">
+        <div class="d-flex bg-white rounded mt-4 pt-2">
             <div class="col-6 ">
-                <div class=" d-flex justify-content-start align-items-center p-2 py-3 mx-2 gap-2">
+                <div class=" d-flex justify-content-start align-items-center p-0 p-md-2 py-3 mx-0 mx-md-2 gap-2">
                     <h2 class="view-text">View:</h2>
                 </div>
             </div>
             <div class="col-6">
-                <div class="d-flex justify-content-end align-items-center p-2 py-3 mx-2 gap-2">
+                <div class="d-flex justify-content-end align-items-center p-0 p-md-2 py-3 mx-0 mx-md-2 gap-2">
                     <button class="btn btn-secondary active" id="tableBtn">
                         <i class="bi bi-table"></i> <span class="bold" id="tableTxt">Table</span>
                     </button>
@@ -34,7 +34,7 @@
 
     @* TABLE *@
     <div class="row mt-3" id="tableRow">
-        <div class="bg-white rounded">
+        <div class="bg-white rounded pt-2">
             @await Html.PartialAsync("Components/Table")
         </div>
     </div>
