@@ -1,7 +1,22 @@
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+
+using TrainTracker.DAL.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+var connectionString = builder.Configuration.GetConnectionString("MariaDbConnectionString");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        connectionString,
+        new MariaDbServerVersion(new Version(12, 0, 2)) // твоя версия MariaDB
+    )
+);
+
+
 
 var app = builder.Build();
 
@@ -12,6 +27,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

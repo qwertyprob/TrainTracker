@@ -1,6 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker", "TrainTracker\TrainTracker.csproj", "{A8107FFD-6A5A-4D3A-91B6-B780B3391E02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.Client", "TrainTracker.Client\TrainTracker.Client.csproj", "{A8107FFD-6A5A-4D3A-91B6-B780B3391E02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.DAL", "TrainTracker.DAL\TrainTracker.DAL.csproj", "{9E62585C-0242-4C62-908F-C2064EC5F490}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.BL", "TrainTracker.BL\TrainTracker.BL.csproj", "{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +16,13 @@ Global
 		{A8107FFD-6A5A-4D3A-91B6-B780B3391E02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8107FFD-6A5A-4D3A-91B6-B780B3391E02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8107FFD-6A5A-4D3A-91B6-B780B3391E02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E62585C-0242-4C62-908F-C2064EC5F490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E62585C-0242-4C62-908F-C2064EC5F490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E62585C-0242-4C62-908F-C2064EC5F490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E62585C-0242-4C62-908F-C2064EC5F490}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

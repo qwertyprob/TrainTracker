@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "id": "688351",
+      "name": "Riga - Daugavpils",
+      "number": "813",
+      "delayTime" : 1,
+      "nextStopObj" :{
+        "id": "10571138",
+        "title": "Lielvarde",
+        "coords": [
+          56.722174,
+          24.8082368
+        ]
+      }
+      
+    }
+    
+  ]
+}
