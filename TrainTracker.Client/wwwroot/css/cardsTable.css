@@ -1,0 +1,12 @@
+.wrapper {
+    transition: all 0.5s ease; 
+}
+
+.wrapper:hover,
+.wrapper:focus,
+.wrapper:active
+{
+    cursor: pointer !important;
+    background-color: whitesmoke !important;
+
+}
