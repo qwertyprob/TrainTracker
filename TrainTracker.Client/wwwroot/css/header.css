@@ -71,11 +71,11 @@ header {
         flex-direction: column;
     }
     .logo {
-        width: 4em;
+        width: 4.2em;
     }
     .logo-text {
-        font-size: 1.3em;
-        white-space: break-spaces;
+        font-size: 1.1em;
+        white-space: nowrap;
     }
     .img-container {
         margin: 0;
