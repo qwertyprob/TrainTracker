@@ -8,3 +8,34 @@
 .hidde-text{
     font-size: 0;
 }
+
+.pulse-text {
+    color: red !important;
+    animation: pulseOpacity 1.5s ease-in-out infinite;
+    font-weight: 800!important;
+}
+
+@keyframes pulseOpacity {
+    0%   { opacity: 0.6; transform: scale(1); }
+    50%  { opacity: 1;   transform: scale(1.05); }
+    100% { opacity: 0.6; transform: scale(1); }
+}
+
+
+.black{
+    color: var(--black-color) !important;
+}
+.blue{
+    color: var(--header-color) !important;
+
+}
+.badge:hover,
+.badge:focus,
+.badge:active {
+    background-color: #f8f9fa !important; 
+    color: #000 !important; 
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+

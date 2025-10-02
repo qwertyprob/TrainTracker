@@ -1,33 +1,40 @@
-<div class="col-12 p-0 p-md-4">
-    <div class="row mt-3 bg-light rounded ">
-        <table class="table table-striped">
+<div class="col-12">
+    <div class="table-responsive mt-3 bg-light rounded p-3">
+        <table class="table table-striped mb-0">
             <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col" class="text-center">Number</th>
+                <th scope="col" class="text-center">Train title</th>
+                <th scope="col" class="text-center">Arriving time</th>
+                <th scope="col" class="text-center">Incidents</th>
+                <th scope="col" class="text-center">Next station</th>
+                <th scope="col" class="text-center">Updated time</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="wrapper">
-                <th scope="row" >1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>$mdo</td>
-            </tr>
-            <tr class="wrapper">
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>$fat</td>
-            </tr>
-            <tr class="wrapper">
-                <th scope="row" >3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>$twitter</td>
-            </tr>
+            @for (int i = 0; i < 12; i++)
+            {
+                <tr class="wrapper">
+                    <td class="text-center align-middle">
+                        <span class="badge bg-secondary">#4005</span>
+                    </td>
+                    <td class="text-center align-middle">
+                        <span class="black bold">Chisinau -> Riga
+                        </span>
+                    </td>
+                    <td class="text-center align-middle">
+                        <span class="blue bold">1 minute
+                        </span>
+                    </td>
+                    <td class="text-center align-middle">
+                        <i class="bi bi-exclamation-triangle fs-4 pulse-text"></i>
+                    </td>
+                    <td class="text-center align-middle fw-bold blue">Forge Station</td>
+                    <td class="text-center align-middle">
+                        <span class="black">10 sec</span>
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>

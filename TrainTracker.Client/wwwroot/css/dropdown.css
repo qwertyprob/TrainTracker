@@ -1,0 +1,24 @@
+#dropdownMenuButton:hover{
+    background-color: lightgray !important;
+    transition: all 0.3s ease;
+}
+
+#dropdownMenuButton:focus{
+    box-shadow: none !important;
+    outline: none !important;
+}
+#dropdownMenuButton:active{
+    transform: translateY(3px) !important;
+    color: var(--ligt-color) !important;
+}
+.dropdown-item {
+    transition: all 0.2s ease-in-out;
+}
+
+
+.dropdown-item:hover,
+.dropdown-item:focus,
+.dropdown-item:active {
+    background-color: #f0f0f0 !important;
+    transform: scale(1.02);
+}

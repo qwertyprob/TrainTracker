@@ -1,12 +1,71 @@
 <div class="row mt-4 p-0 p-md-3">
     @for (int i = 0; i < 5; i++)
     {
-    <div class="col-12 col-md-6 mb-3 ">
-        <div class="bg-light rounded p-1 p-md-3 wrapper">
-            <h5>🚆 Train №@(200+i)</h5>
-            <p><strong>Route:</strong> Ungheni → Iasi</p>
-            <p><strong>Status:</strong> <span class="text-danger">Delayed</span></p>
+        <div class="col-12 col-md-6 mb-4">
+            <div class="card h-100 shadow-sm border-0 rounded">
+                <div class="card-header text-white border-0 fs-5 fw-bold d-flex justify-content-between ">
+                    Riga → Chisinau
+                    <!-- Dropdown ... -->
+                    <div class="dropdown">
+                        <button class="btn btn-link text-dark p-1" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots fs-5"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li class="d-flex align-items-center"><a class="dropdown-item" href="#">
+                                <i class="bi bi-card-list blue"></i>
+                                <span class="bold text-secondary">View history</span>
+                            </a></li>
+                            <li class="d-flex align-items-center"><a class="dropdown-item" href="#">
+                                <i class="bi bi-pencil-square blue"></i>
+                                <span class="bold text-secondary"> Write an incident</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-3">
+                        <!-- Левая колонка -->
+                        <div class="col-12 col-md-6">
+                            <!-- Number-->
+                            <div class="mb-2">
+                                <span class="badge bg-light text-muted">Train number:</span>
+                                <span class="fw-bold blue">#4005</span>
+                            </div>
+                            <!-- Time/Delay -->
+                            <div class="mb-2">
+                                <span class="badge bg-light text-muted">Arriving time:</span>
+                                <span class="fw-bold text-success">1 minute...</span>
+                            </div>
+                        </div>
+
+                        <!-- Правая колонка -->
+                        <div class="col-12 col-md-6 d-flex flex-column justify-content-between">
+                            <!-- Incidents-->
+                            <div class="mb-2 d-flex align-items-center">
+                                <span class="badge bg-light text-muted">Incidents:</span>
+                                <span class="pulse-text mb-1"><i class="bi bi-exclamation-triangle ms-2 fs-4"></i></span>
+                            </div>
+                            <!-- Updated time-->
+                            <div class="mb-2">
+                                <span class="badge bg-success text-muted" style="color: white !important;">Updated:</span>
+                                <span class="badge bg-secondary">1 second ago</span>
+                            </div>
+
+                        </div>
+                        <!-- Next station-->
+                        <div class="mt-3 p-2 fw-bold text-primary d-flex align-items-center">
+                            <span class="badge bg-light text-muted">Next station:</span>
+                            <span class="fw-bold blue fs-5 ms-2">Forge station</span>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
-    </div>
+        
     }
 </div>
+<script src="js/cardBodyMove.js"></script>

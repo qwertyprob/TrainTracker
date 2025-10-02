@@ -10,3 +10,54 @@
     background-color: whitesmoke !important;
 
 }
+
+.card,
+.card-header,
+.list-group-item {
+    transition: 0.25s ease;
+    border-color: var(--ligt-color) !important;
+}
+.card-header{
+    background-color: var(--table-grey) !important;
+    color: var(--header-color) !important;
+
+}
+
+    .card-body:hover,
+    .card-body:focus,
+    .card-body:active{
+        background-color: var(--ligt-color) !important;
+        cursor: pointer;
+    }
+    .card:focus,
+    .card:active{
+        cursor: default !important;
+
+    }
+    .card-header:focus,
+    .card-header:active {
+        border: none !important;
+        transform: none !important;
+        outline: none !important;
+    }
+
+.active-card {
+    border-color: var(--ligt-color) !important;
+    transform: translateY(3px) !important;
+    transition: transform 0.15s ease-in-out;
+}
+    
+
+
+
+
+.train-number{
+    display: inline-block;
+    color: var(--ligt-color) !important;
+    background-color: var(--light-blue) !important;
+    border-radius: 5% !important;
+    padding: 0.25em 0.5em;
+    margin-top: 0.25em !important;
+    margin-bottom: 0.25em !important;
+    font-weight: 700 !important;
+}
