@@ -6,17 +6,15 @@ namespace TrainTracker.Controllers;
 
 public class DashboardController : Controller
 {
-    private readonly ILogger<DashboardController> _logger;
-
-
-    public DashboardController(ILogger<DashboardController> logger)
+    
+    public DashboardController()
     {
-        _logger = logger;
+     
+        
     }
 
     public async Task<IActionResult> Index()
     {
-        
         
         return View();
     }

@@ -17,7 +17,8 @@ public class IncidentRepository: IIncidentRepository
 
     public async Task<IncidentEntity?> GetByIdAsync(int id)
     {
-        return await _context.Incidents.Where(x => x.Id == id).FirstOrDefaultAsync();
+        return await _context.Incidents
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<IEnumerable<IncidentEntity?>> GetAllAsync()
