@@ -13,7 +13,7 @@ public class TrainEntity
     
     public int DelayTime { get; set; } //data[0].returnValue.arrivingTime
     
-    public DateTime LastUpdate { get; set; } //время обновления
+    public DateTime CreatedAt { get; set; } //время обновления
     
     // Связь 1:1 StationEntity
     public StationEntity? NextStation { get; set; } //data[0].returnValue.nextStopObj 
