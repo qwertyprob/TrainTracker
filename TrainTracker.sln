@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.DAL", "TrainTr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.BL", "TrainTracker.BL\TrainTracker.BL.csproj", "{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.DTO", "TrainTracker.DTO\TrainTracker.DTO.csproj", "{5EDABB85-A53D-4BAA-AD0F-0491A485EF79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EDABB85-A53D-4BAA-AD0F-0491A485EF79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EDABB85-A53D-4BAA-AD0F-0491A485EF79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EDABB85-A53D-4BAA-AD0F-0491A485EF79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EDABB85-A53D-4BAA-AD0F-0491A485EF79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

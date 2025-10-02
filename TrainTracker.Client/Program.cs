@@ -2,19 +2,27 @@ using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 using TrainTracker.DAL.Entities;
+using TrainTracker.DAL.Interfaces;
+using TrainTracker.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 var connectionString = builder.Configuration.GetConnectionString("MariaDbConnectionString");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(
         connectionString,
-        new MariaDbServerVersion(new Version(12, 0, 2)) // твоя версия MariaDB
+        new MariaDbServerVersion(new Version(12, 0, 2)) // версия MariaDB
     )
 );
+
+//DAL
+builder.Services.AddScoped<ITrainRepository, TrainRepository>();
+builder.Services.AddScoped<IIncidentRepository, IncidentRepository>();
+
 
 
 
