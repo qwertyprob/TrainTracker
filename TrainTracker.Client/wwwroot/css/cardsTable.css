@@ -61,3 +61,13 @@
     margin-bottom: 0.25em !important;
     font-weight: 700 !important;
 }
+
+.pulse-card {
+    animation: pulseSoftPink 2s ease-in-out infinite;
+}
+
+@keyframes pulseSoftPink {
+    0%   { background-color: white; scale: none }   
+    50%  { background-color: #ffe6f0; scale: none}   
+    100% { background-color: #ffffff; scale: none}
+}

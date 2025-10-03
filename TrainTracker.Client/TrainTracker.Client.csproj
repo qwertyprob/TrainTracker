@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TrainTracker.BLL\TrainTracker.BLL.csproj" />
       <ProjectReference Include="..\TrainTracker.DAL\TrainTracker.DAL.csproj" />
     </ItemGroup>
 

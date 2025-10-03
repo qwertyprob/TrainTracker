@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-
+using TrainTracker.BLL.Interfaces;
+using TrainTracker.BLL.Services;
 using TrainTracker.DAL.Entities;
 using TrainTracker.DAL.Interfaces;
 using TrainTracker.DAL.Repositories;
@@ -19,12 +20,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+//DI containers
 //DAL
 builder.Services.AddScoped<ITrainRepository, TrainRepository>();
 builder.Services.AddScoped<IIncidentRepository, IncidentRepository>();
 
-
-
+//BLL
+builder.Services.AddScoped<ITrainService, TrainService>();
+builder.Services.AddScoped<IIncidentService, IncidentService>();
 
 var app = builder.Build();
 
@@ -38,9 +41,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
-
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -48,8 +48,14 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//Dashboard
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
+    name: "dashboard",
+    pattern: "{controller=Train}/{action=Index}");
+
+//TrainInfo
+app.MapControllerRoute(
+    name: "traininfo",
+    pattern: "{controller=Train}/{action=TrainInfo}/{id?}");
 
 app.Run();

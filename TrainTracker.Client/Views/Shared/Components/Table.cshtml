@@ -1,6 +1,9 @@
-<div class="col-12">
+@model IEnumerable<TrainDto>
+
+
+<div class="col-12 pb-4">
     <div class="table-responsive mt-3 bg-light rounded p-3">
-        <table class="table table-striped mb-0">
+        <table class="table table-striped pb-3 ">
             <thead>
             <tr>
                 <th scope="col" class="text-center">Number</th>
@@ -12,26 +15,49 @@
             </tr>
             </thead>
             <tbody>
-            @for (int i = 0; i < 12; i++)
+            
+            @foreach (var train in Model)
             {
-                <tr class="wrapper">
+                <tr class="wrapper" style="cursor:pointer;" onclick="location.href='/TrainInfo/@train.Id'">
                     <td class="text-center align-middle">
-                        <span class="badge bg-secondary">#4005</span>
+                        <span class="badge bg-secondary">@train.Number</span>
                     </td>
                     <td class="text-center align-middle">
-                        <span class="black bold">Chisinau -> Riga
-                        </span>
+                        <span class="black bold">@train.Name</span>
                     </td>
+                    @if (train.DelayTime > 10)
+                    {
+                        <td class="text-center align-middle">
+                            <span class="blue bold">@train.DelayTime</span>
+                        </td>
+                    }
+                    else if (train.DelayTime == 0)
+                    {
+                        <td class="text-center align-middle">
+                            <span class="blue bold">Now</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="text-center align-middle">
+                            <span class="blue bold">@train.DelayTime</span>
+                        </td>
+                    }
+
                     <td class="text-center align-middle">
-                        <span class="blue bold">1 minute
-                        </span>
+                        @if (!train.Incidents.Any())
+                        {
+                            <span>No incidents!</span>
+                        }
+                        else
+                        {
+                            <i class="bi bi-exclamation-triangle fs-4 pulse-text"></i>
+                        }
                     </td>
+
+                    <td class="text-center align-middle fw-bold blue">@train.NextStation.Title</td>
                     <td class="text-center align-middle">
-                        <i class="bi bi-exclamation-triangle fs-4 pulse-text"></i>
-                    </td>
-                    <td class="text-center align-middle fw-bold blue">Forge Station</td>
-                    <td class="text-center align-middle">
-                        <span class="black">10 sec</span>
+                        <span class="black">@((DateTime.UtcNow - train.CreatedAt).TotalSeconds.ToString("0")) sec ago</span>
                     </td>
                 </tr>
             }
@@ -39,3 +65,4 @@
         </table>
     </div>
 </div>
+

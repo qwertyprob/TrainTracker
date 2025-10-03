@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.Client", "Trai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.DAL", "TrainTracker.DAL\TrainTracker.DAL.csproj", "{9E62585C-0242-4C62-908F-C2064EC5F490}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.BL", "TrainTracker.BL\TrainTracker.BL.csproj", "{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.BLL", "TrainTracker.BLL\TrainTracker.BLL.csproj", "{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.DTO", "TrainTracker.DTO\TrainTracker.DTO.csproj", "{5EDABB85-A53D-4BAA-AD0F-0491A485EF79}"
 EndProject

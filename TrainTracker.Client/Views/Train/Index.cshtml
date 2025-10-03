@@ -1,0 +1,60 @@
+﻿@model BaseResponseModel<IEnumerable<TrainDto>>
+@{
+    ViewData["Title"] = "Dashboard";
+}
+@if (Model.StatusCode == StatusCodes.Status200OK)
+{
+    <div class="container">
+        <div class="row mt-3">
+            <div class="d-flex bg-white rounded mt-4 pt-2">
+                <div class="col-6 ">
+                    <div class=" d-flex justify-content-start align-items-center p-0 p-md-2 py-3 mx-0 mx-md-2 gap-2">
+                        <h2 class="view-text">View:</h2>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex justify-content-end align-items-center p-0 p-md-2 py-3 mx-0 mx-md-2 gap-2">
+                        <button class="btn btn-secondary active" id="tableBtn">
+                            <i class="bi bi-table"></i> <span class="bold" id="tableTxt">Table</span>
+                        </button>
+                        <button class="btn btn-secondary" id="cardsBtn">
+                            <i class="bi bi-grid-3x3-gap"></i> <span class="bold hidden" id="cardsTxt">Cards</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        
+        </div>
+        @* CARDS *@
+        <div class="row mt-3 hidden" id="cardsRow">
+            <div class="bg-white rounded">
+                @await Html.PartialAsync("Components/Cards", Model.Data)
+            </div>
+        </div>
+
+        @* TABLE *@
+        <div class="row mt-3" id="tableRow">
+            <div class="bg-white rounded pt-2">
+                @await Html.PartialAsync("Components/Table", Model.Data)
+            </div>
+        </div>
+    
+    </div>
+
+}
+else
+{
+    <div class="container">
+        <div class="row mt-3">
+            <div class="d-flex bg-white rounded mt-4 pt-2 flex-column justify-content-center align-items-center">
+                <h1 class="text-center fs-1 strong blue mb-0">@Model.Message</h1>
+                
+                <i class="bi bi-exclamation-triangle pulse-text" style="font-size: 6rem;"></i>
+               
+            </div>
+        </div>
+    </div>
+}
+@* View Table/Cards *@
+<script src="js/toggleShow.js"></script>
