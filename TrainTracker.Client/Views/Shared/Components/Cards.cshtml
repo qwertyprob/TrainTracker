@@ -32,7 +32,7 @@
 
                 </div>
 
-                <div class="card-body " onclick="location.href='/TrainInfo/@train.Id'">
+                <div class="card-body wrapper  " onclick="location.href='/TrainInfo/@train.Id'">
                     <div class="row g-3">
                         <!-- Левая колонка -->
                         <div class="col-12 col-md-6 mb-4">
@@ -54,14 +54,14 @@
 
                                     if (delay >= 10)
                                     {
-                                        <div class="d-inline ms-2" style="white-space: nowrap;">
+                                        <div class="d-inline" style="white-space: nowrap;">
                                             <span class="fw-bold fs-5 ms-2 text-danger delayed" id="@delay">@delay </span>
                                             <span class="fw-bold">min</span>
                                         </div>
                                     }
                                     else if (delay > 5)
                                     {
-                                        <div class="d-inline" style="white-space: nowrap;">
+                                        <div class="d-inline mt-2" style="white-space: nowrap;">
                                             <span class="fw-bold ms-2 fs-5 text-warning" id="@delay">@delay </span>
                                             <span class="fw-bold">min</span>
                                         </div>

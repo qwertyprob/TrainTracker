@@ -8,8 +8,10 @@
 .wrapper:focus,
 .wrapper:active
 {
-    transform: scale(0.99);
+    transform: scale(1.02);
     cursor: pointer !important;
+    border-radius: 10px !important;
+
     background-color: #CAE4FFFF !important;
 
 }
@@ -29,13 +31,16 @@
     .card-body:hover,
     .card-body:focus,
     .card-body:active{
-        transform: scale(0.98);
+        transform: scale(0.95);
         background-color: var(--ligt-color) !important;
+        border-radius: 10px !important;
         cursor: pointer;
     }
     .card:focus,
     .card:active{
         cursor: default !important;
+        border-radius: 10px !important;
+
 
     }
     .card-header:focus,
