@@ -26,11 +26,13 @@ header {
 }
 
     .img-container:hover,
-    .img-container:focus,
-    .img-container:active{
-        background-color: floralwhite !important;
-        transform: translateY(-5px) !important;
+    .img-container:focus{
+        transform: scale(1.1);
 
+    }
+    .img-container:active{
+        background-color: var(--ligt-color) !important;
+        transform: scale(0.96) !important;
     }
 
 .logo {

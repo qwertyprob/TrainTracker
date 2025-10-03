@@ -8,6 +8,8 @@
 }
 .btn.btn-secondary:hover{
     color:lightblue !important;
+    transform: scale(1.07) !important;
+
 }
 .btn.btn-secondary:focus {
     background-color: var(--light-blue)!important;
@@ -15,7 +17,7 @@
 }
 
 .btn.btn-secondary:active {
-    transform: translateY(4px) !important;
+    transform: scale(0.90) !important;
     background-color: var(--light-blue) !important;
     border: 1px solid var(--light-blue) !important;
 }
