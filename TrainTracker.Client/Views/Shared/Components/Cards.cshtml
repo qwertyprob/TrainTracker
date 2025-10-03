@@ -76,12 +76,12 @@
                         <!-- Правая колонка -->
                         <div class="col-12 col-md-6 d-flex flex-column justify-content-between">
 
-                            @if (train.Incidents?.Count() != 0)
+                            @if (train.Incidents?.Count() == 0)
                             {
                                 <!-- Incidents-->
                                 <div class="mb-2 d-flex align-items-center">
                                     <span class="badge bg-light text-muted">Incidents:</span>
-                                    <span class="pulse-text"><i class="bi bi-exclamation-triangle ms-2 fs-4"></i></span>
+                                    <span class="pulse-text pb-2"><i class="bi bi-exclamation-triangle ms-2 fs-4"></i></span>
                                 </div>
                             }
 
