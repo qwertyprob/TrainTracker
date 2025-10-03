@@ -10,6 +10,8 @@ public class IncidentEntity
     
     public string? Comment { get; set; }
     
+    public DateTime CreatedAt { get; set; }
+    
     //Связь 1:M TrainEntity
     public long TrainId { get; set; } // FK
     public TrainEntity Train { get; set; }

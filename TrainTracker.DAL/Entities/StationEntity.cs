@@ -2,7 +2,7 @@ namespace TrainTracker.DAL.Entities;
 
 public class StationEntity
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
     public string StationTitle { get; set; }
     
     //Можно добавить данные..

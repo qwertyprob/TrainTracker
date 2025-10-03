@@ -20,6 +20,7 @@ public class IncidentRepository: IIncidentRepository
         return await _context.Incidents
             .FirstOrDefaultAsync(x => x.Id == id);
     }
+    
 
     public async Task<IEnumerable<IncidentEntity?>> GetAllAsync()
     {
@@ -27,7 +28,7 @@ public class IncidentRepository: IIncidentRepository
     }
 
 
-    public async Task AddAsync(IncidentDto incident,long trainId)
+    public async Task<IncidentEntity> AddAsync(IncidentDto incident,long trainId)
     {
         var incidentEntity = new IncidentEntity()
         {
@@ -41,6 +42,7 @@ public class IncidentRepository: IIncidentRepository
         
         await _context.SaveChangesAsync();
 
+        return incidentEntity;
 
     }
 

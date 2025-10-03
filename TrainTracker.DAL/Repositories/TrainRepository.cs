@@ -36,10 +36,10 @@ public class TrainRepository : ITrainRepository
             Id = train.Id,
             Name = train.Name,
             Number = train.Number,
-            DelayTime = train.DelayTime,
+            DelayTime = train.RawDelayTime,
             NextStation = new StationEntity()
             {
-                StationTitle = train.NextStation
+                StationTitle = train.NextStation.Title
             },
             
             CreatedAt = train.CreatedAt,
@@ -54,6 +54,9 @@ public class TrainRepository : ITrainRepository
     public async Task DeleteAsync(long id)
     {
         var trainToDelete = await this.GetByIdAsync(id);
+        
+        if(trainToDelete == null)
+            return;
         
         _context.Trains.Remove(trainToDelete);
 
