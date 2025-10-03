@@ -1,3 +1,5 @@
+
+
 .wrapper {
     transition: all 0.5s ease; 
 }
@@ -6,15 +8,16 @@
 .wrapper:focus,
 .wrapper:active
 {
+    transform: scale(0.99);
     cursor: pointer !important;
-    background-color: whitesmoke !important;
+    background-color: #CAE4FFFF !important;
 
 }
 
 .card,
 .card-header,
 .list-group-item {
-    transition: 0.25s ease;
+    transition: all 0.3s ease;
     border-color: var(--ligt-color) !important;
 }
 .card-header{
@@ -26,6 +29,7 @@
     .card-body:hover,
     .card-body:focus,
     .card-body:active{
+        transform: scale(0.98);
         background-color: var(--ligt-color) !important;
         cursor: pointer;
     }
@@ -71,3 +75,16 @@
     50%  { background-color: #ffe6f0; scale: none}   
     100% { background-color: #ffffff; scale: none}
 }
+.pulse-now-card {
+    animation: pulseSoftGreen 2.5s ease-in-out infinite;
+}
+
+@keyframes pulseSoftGreen {
+    0%   { background-color: #ffffff; }
+    50%  { background-color: #e6ffed; } 
+    100% { background-color: #ffffff; }
+}
+
+
+
+

@@ -6,6 +6,10 @@ function pulseBackground(parrent){
             if (card.querySelector('.delayed')){
                 card.classList.add('pulse-card');
             }
+            else if(card.querySelector('.now')){
+                card.classList.add('pulse-now-card');
+
+            }
         }
 
     )

@@ -4,9 +4,10 @@
 <div class="row mt-4 p-0 p-md-3">
     @foreach (var train in Model)
     {
-        <div class="col-12 col-md-6 mb-4">
+        <div class="col-12 col-sm-6 col-lg-4 mb-4">
+            
             <div class="card h-100 shadow-sm border-0 rounded">
-                
+
                 <div class="card-header text-white border-0 fs-5 fw-bold d-flex justify-content-between ">
                     @train.Name
                     <!-- Dropdown ... -->
@@ -24,20 +25,24 @@
                                 <a class="dropdown-item" href="#">
                                     <i class="bi bi-pencil-square blue"></i>
                                     <span class="bold text-secondary"> Write an incident</span>
-                                </a></li>
+                                </a><
+                            /li>
                         </ul>
                     </div>
-                    
+
                 </div>
 
                 <div class="card-body " onclick="location.href='/TrainInfo/@train.Id'">
                     <div class="row g-3">
                         <!-- Левая колонка -->
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-6 mb-4">
                             <!-- Number-->
-                            <div class="mb-2">
-                                <span class="badge bg-light text-muted">Train number:</span>
-                                <span class="fw-bold ms-1 blue ">#@train.Number</span>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <span class="badge bg-light text-muted">Train number:</span>
+                                    <span class="fw-bold ms-2 blue">#@train.Number</span>
+                                </div>
+                                
                             </div>
                             <!-- Time/Delay -->
                             <div class="mb-2">
@@ -47,33 +52,43 @@
                                     //Из-за рандом метода
                                     var delay = train.DelayTime;
 
-                                    @if (delay >= 10)
+                                    if (delay >= 10)
                                     {
-                                        <span class="fw-bold fs-5 text-danger delayed" id="@delay">@delay </span>
-                                        <span class="fw-bold">minutes</span>
+                                        <div class="d-inline ms-2" style="white-space: nowrap;">
+                                            <span class="fw-bold fs-5 ms-2 text-danger delayed" id="@delay">@delay </span>
+                                            <span class="fw-bold">min</span>
+                                        </div>
                                     }
                                     else if (delay > 5)
                                     {
-                                        <span class="fw-bold fs-5 text-warning" id="@delay">@delay </span>
-                                        <span class="fw-bold">minutes</span>
-                                    }
+                                        <div class="d-inline" style="white-space: nowrap;">
+                                            <span class="fw-bold ms-2 fs-5 text-warning" id="@delay">@delay </span>
+                                            <span class="fw-bold">min</span>
+                                        </div>
+
+                                }
                                     else
                                     {
-                                        <span class="fw-bold fs-5 text-success" id="@delay">@delay </span>
-                                        <span class="fw-bold">minutes</span>
+                                        <div class="d-inline" style="white-space: nowrap;">
+                                            <span class="fw-bold ms-2 fs-5 text-success" id="@delay">@delay </span>
+                                            <span class="fw-bold">min</span>
+                                        </div>
                                     }
 
 
                                 }
                                 else
                                 {
-                                    <span class="fw-bold text-success now" id="@train.DelayTime">Now</span>
+                                    <div class="d-inline" style="white-space: nowrap;">
+                                        <span class="fw-bold ms-2 text-success now" id="@train.DelayTime">Now</span>
+                                    </div>
 
                                 }
                             </div>
                         </div>
 
                         <!-- Правая колонка -->
+                        
                         <div class="col-12 col-md-6 d-flex flex-column justify-content-between">
 
                             @if (train.Incidents?.Count() == 0)
@@ -100,7 +115,7 @@
 
                         </div>
                     </div>
-                    
+
                 </div>
 
 
