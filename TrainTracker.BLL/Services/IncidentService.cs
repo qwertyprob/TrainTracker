@@ -16,33 +16,45 @@ public class IncidentService :IIncidentService
         _trainRepository = trainRepository;
 
     }
-    public async Task<BaseResponseModel<List<IncidentDto>>> GetAllIncidentsAsync()
+    public async Task<BaseResponseModel<List<IncidentDto>>> GetAllIncidentsAsync(long trainId)
     {
-        var entities = await _incidentRepository.GetAllAsync();
+        try
+        {
+            var entities = await _incidentRepository.GetAllByTrainAsync(trainId);
 
-        if (entities == null || !entities.Any())
+            if (entities == null || !entities.Any())
+            {
+                return new BaseResponseModel<List<IncidentDto>>
+                {
+                    StatusCode = 404,
+                    Message = "No incidents found!",
+                    Data = new List<IncidentDto>()
+                };
+            }
+
+            var dtos = entities.Select(e => new IncidentDto
+            {
+                Username = e.Username,
+                Reason = e.Reason,
+                Comment = e.Comment
+            }).ToList();
+
+            return new BaseResponseModel<List<IncidentDto>>
+            {
+                StatusCode = 200,
+                Message = "Incidents fetched successfully!",
+                Data = dtos
+            };
+        }
+        catch (Exception ex)
         {
             return new BaseResponseModel<List<IncidentDto>>
             {
-                StatusCode = 404,
-                Message = "No incidents found",
-                Data = new List<IncidentDto>()
+                StatusCode = 500,
+                Message = $"Incidents error: {ex.Message}",
+                Data = null
             };
         }
-
-        var dtos = entities.Select(e => new IncidentDto
-        {
-            Username = e.Username,
-            Reason = e.Reason,
-            Comment = e.Comment
-        }).ToList();
-
-        return new BaseResponseModel<List<IncidentDto>>
-        {
-            StatusCode = 200,
-            Message = "Incidents fetched successfully",
-            Data = dtos
-        };
     }
 
 
@@ -60,7 +72,7 @@ public class IncidentService :IIncidentService
                     Data = null
                 };
 
-            if (train.Incidents.Any(i => i.Username == incidentDto.Username))
+            if (train.Incidents!.Any(i => i.Username == incidentDto.Username))
                 return new BaseResponseModel<IncidentDto>
                 {
                     StatusCode = 400,
@@ -68,7 +80,8 @@ public class IncidentService :IIncidentService
                     Data = null
                 };
 
-            var incident = await _incidentRepository.AddAsync(incidentDto, trainId);
+            //Добавление 
+            await _incidentRepository.AddAsync(incidentDto, trainId);
 
             return new BaseResponseModel<IncidentDto>
             {
@@ -82,7 +95,7 @@ public class IncidentService :IIncidentService
             return new BaseResponseModel<IncidentDto>
             {
                 StatusCode = 500,
-                Message = "Unexpected error: " + ex.Message,
+                Message = "Server incident error: " + ex.Message,
                 Data = null
             };
         }

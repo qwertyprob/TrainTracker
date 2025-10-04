@@ -7,7 +7,7 @@ public interface IIncidentRepository
 {
     Task<IncidentEntity?> GetByIdAsync(int id);
     
-    Task<IEnumerable<IncidentEntity?>> GetAllAsync();
+    Task<IEnumerable<IncidentEntity>> GetAllByTrainAsync(long trainId);
     Task<IncidentEntity> AddAsync(IncidentDto incident , long trainId);
     Task DeleteAsync(int id);
 }

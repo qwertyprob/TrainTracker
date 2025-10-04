@@ -62,4 +62,13 @@ public class TrainRepository : ITrainRepository
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task ClearAllAsync()
+    {
+        _context.Trains.RemoveRange(_context.Trains);
+        _context.Incidents.RemoveRange(_context.Incidents);
+
+        await _context.SaveChangesAsync();
+
+    }
 }

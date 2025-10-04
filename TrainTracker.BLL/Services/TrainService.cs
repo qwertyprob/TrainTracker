@@ -1,3 +1,4 @@
+using System.Text;
 using Newtonsoft.Json;
 using TrainTracker.BLL.Interfaces;
 using TrainTracker.DAL.Interfaces;
@@ -54,12 +55,13 @@ public class TrainService :ITrainService
         {
             StatusCode = 200,
             Message = "Trains fetched successfully",
-            Data = _trains
+            Data = _trains!.OrderBy(x=>x.DelayTime) // по убыванию
         };
 
         return response;
         
     }
+    
 
 
 

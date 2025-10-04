@@ -21,11 +21,20 @@ public class IncidentRepository: IIncidentRepository
             .FirstOrDefaultAsync(x => x.Id == id);
     }
     
+    
 
-    public async Task<IEnumerable<IncidentEntity?>> GetAllAsync()
+    public async Task<IEnumerable<IncidentEntity>> GetAllByTrainAsync(long trainId)
     {
-        return await _context.Incidents.ToListAsync();
+        var train = await _context.Trains
+            .Include(i => i.Incidents)
+            .FirstOrDefaultAsync(x => x.Id == trainId);
+
+        if (train == null)
+            return Enumerable.Empty<IncidentEntity>();
+
+        return train.Incidents ?? Enumerable.Empty<IncidentEntity>();
     }
+
 
 
     public async Task<IncidentEntity> AddAsync(IncidentDto incident,long trainId)

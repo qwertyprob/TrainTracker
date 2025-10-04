@@ -10,5 +10,8 @@ public interface ITrainRepository
      Task AddAsync(TrainDto train);
      Task DeleteAsync(long id);
      
+     //Для удаления симуляционных данных
+     Task ClearAllAsync();
+
 
 }
