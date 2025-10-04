@@ -1,0 +1,78 @@
+.form-control {
+    background-color: #fff !important;
+    border: 2px solid var(--ligt-color) !important;
+    border-radius: 10px !important;
+    color: #333 !important;
+    transition: all 0.3s ease-in-out !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.form-control:hover {
+    background-color: #fff !important;
+    transform: scale(1.02) !important;
+}
+
+.form-control:focus {
+    border-color: var(--light-blue) !important;
+    background-color: var(--ligt-color) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.form-control:active {
+    transform: translateY(2px);
+}
+
+/* Placeholder */
+.form-control::placeholder {
+    color: #aaa !important;
+    opacity: 1 !important;
+}
+
+/* Textarea */
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+    padding: 0.8rem !important;
+}
+
+
+.form-select {
+    background-color: #fff !important;
+    border: 2px solid var(--ligt-color) !important;
+    border-radius: 0.6rem !important;
+    transition: all 0.3s ease-in-out !important;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+
+.form-select:hover {
+    transform: scale(1.02) !important;
+
+}
+
+
+.form-select:focus {
+    border-color: var(--light-blue) !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transform: scale(1.02) !important;
+
+}
+
+.form-select:active {
+    border-color: var(--light-blue) !important;
+    transform: scale(1.02) !important;
+    color: var(--ligt-color) !important;
+}
+.form-select option {
+    transition: all 0.3s ease-in-out !important;
+
+}
+
+.form-select option:hover,
+.form-select option:focus,
+.form-select option:active {
+    font-size: 1.2rem !important; 
+}
