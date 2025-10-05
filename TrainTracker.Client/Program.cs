@@ -13,12 +13,16 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("MariaDbConnectionString");
 
+
 builder.Services.AddDbContext<AppDbContext>(options =>
+{
     options.UseMySql(
-        connectionString,
-        new MariaDbServerVersion(new Version(12, 0, 2)) // версия MariaDB
-    )
-);
+            connectionString,
+            new MariaDbServerVersion(new Version(12, 0, 2))
+        )
+        .LogTo(Console.WriteLine, LogLevel.Error); 
+});
+
 
 //DI containers
 //DAL
@@ -28,6 +32,10 @@ builder.Services.AddScoped<IIncidentRepository, IncidentRepository>();
 //BLL
 builder.Services.AddScoped<ITrainService, TrainService>();
 builder.Services.AddScoped<IIncidentService, IncidentService>();
+builder.Services.AddSingleton<TrainJsonParser>();
+
+
+builder.Services.AddHostedService<TrainSimulationBackgroundService>();
 
 var app = builder.Build();
 

@@ -36,8 +36,11 @@ public class IncidentService :IIncidentService
             {
                 Username = e.Username,
                 Reason = e.Reason,
-                Comment = e.Comment
-            }).ToList();
+                Comment = e.Comment,
+                CreatedAt = e.CreatedAt
+                
+            }).OrderBy(x=>x.CreatedAt)
+                .ToList();
 
             return new BaseResponseModel<List<IncidentDto>>
             {
@@ -64,21 +67,14 @@ public class IncidentService :IIncidentService
         {
             var train = await _trainRepository.GetByIdAsync(trainId);
 
-            if (train == null)
+            if (train == null )
                 return new BaseResponseModel<IncidentDto>
                 {
                     StatusCode = 404,
                     Message = "Train not found",
                     Data = null
                 };
-
-            if (train.Incidents!.Any(i => i.Username == incidentDto.Username))
-                return new BaseResponseModel<IncidentDto>
-                {
-                    StatusCode = 400,
-                    Message = $"User '{incidentDto.Username}' has already reported an incident for this train",
-                    Data = null
-                };
+            
 
             //Добавление 
             await _incidentRepository.AddAsync(incidentDto, trainId);
