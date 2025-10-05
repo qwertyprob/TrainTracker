@@ -24,9 +24,11 @@ public class TrainRepository : ITrainRepository
     }
 
     public async Task<IEnumerable<TrainEntity>> GetAllAsync()
-    { 
-        return await _context.Trains.ToListAsync();
-        
+    {
+        return await _context.Trains
+            .Include(t => t.NextStation)   
+            .Include(t => t.Incidents) 
+            .ToListAsync();
     }
 
     public async Task AddAsync(TrainDto train)
@@ -50,23 +52,12 @@ public class TrainRepository : ITrainRepository
         await _context.SaveChangesAsync();
         
     }
-
-    public async Task DeleteAsync(long id)
-    {
-        var trainToDelete = await this.GetByIdAsync(id);
-        
-        if(trainToDelete == null)
-            return;
-        
-        _context.Trains.Remove(trainToDelete);
-
-        await _context.SaveChangesAsync();
-    }
+    
 
     public async Task ClearAllAsync()
     {
-        _context.Trains.RemoveRange(_context.Trains);
-        _context.Incidents.RemoveRange(_context.Incidents);
+        await _context.Database.ExecuteSqlRawAsync("DELETE FROM Trains");
+        await _context.Database.ExecuteSqlRawAsync("DELETE FROM Incidents");
 
         await _context.SaveChangesAsync();
 
