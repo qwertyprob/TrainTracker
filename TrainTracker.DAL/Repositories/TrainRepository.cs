@@ -26,8 +26,8 @@ public class TrainRepository : ITrainRepository
     public async Task<IEnumerable<TrainEntity>> GetAllAsync()
     {
         return await _context.Trains
-            .Include(t => t.NextStation)   
-            .Include(t => t.Incidents) 
+            .Include(t => t.NextStation)
+            .Include(t => t.Incidents)
             .ToListAsync();
     }
 
@@ -56,10 +56,11 @@ public class TrainRepository : ITrainRepository
 
     public async Task ClearAllAsync()
     {
-        await _context.Database.ExecuteSqlRawAsync("DELETE FROM Trains");
         await _context.Database.ExecuteSqlRawAsync("DELETE FROM Incidents");
+        await _context.Database.ExecuteSqlRawAsync("ALTER TABLE Incidents AUTO_INCREMENT = 1");
 
-        await _context.SaveChangesAsync();
-
+        await _context.Database.ExecuteSqlRawAsync("DELETE FROM Trains");
+        await _context.Database.ExecuteSqlRawAsync("ALTER TABLE Trains AUTO_INCREMENT = 1");
     }
+
 }

@@ -2,7 +2,18 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
-@if (Model.StatusCode == StatusCodes.Status200OK)
+@if (@Model.StatusCode != StatusCodes.Status200OK)
+{
+    <div class="container">
+        <div class="row mt-3" style="margin-top: 15em!important;">
+            <div class="loader"></div>
+            <div class="row mt-3">
+                <h1 class="text-center black bold">@Model.Message</h1>
+            </div>
+        </div>
+    </div>
+}
+else
 {
     <div class="container">
         <div class="row mt-3">
@@ -14,7 +25,7 @@
                 </div>
                 <div class="col-6">
                     <div class="d-flex justify-content-end align-items-center p-0 p-md-2 py-3 mx-0 mx-md-2 gap-2">
-                        <button class="btn btn-secondary active" id="tableBtn">
+                        <button class="btn btn-secondary" id="tableBtn">
                             <i class="bi bi-table adaptive-i"></i> <span class="bold adaptive-span" id="tableTxt">Table</span>
                         </button>
                         <button class="btn btn-secondary" id="cardsBtn">
@@ -29,7 +40,8 @@
         @* CARDS *@
         <div class="row mt-3 hidden" id="cardsRow">
             <div class="bg-white rounded">
-                @await Html.PartialAsync("Components/Cards", Model.Data)
+                <div id="cardsContainer">                
+                </div>
             </div>
         </div>
 
@@ -43,18 +55,36 @@
     </div>
 
 }
-else
+@section Scripts
 {
-    <div class="container">
-        <div class="row mt-3">
-            <div class="d-flex bg-white rounded mt-4 pt-2 flex-column justify-content-center align-items-center">
-                <h1 class="text-center fs-1 strong blue mb-0">@Model.Message</h1>
-                
-                <i class="bi bi-exclamation-triangle pulse-text" style="font-size: 6rem;"></i>
-               
-            </div>
-        </div>
-    </div>
+    @* View Table/Cards *@
+    <script src="~/js/toggleShow.js"></script>
+    
+    <script>
+        let getTrainUrl = '@Url.Action("LoadTrainsAsync", "Train")';
+        console.log(getTrainUrl);
+
+        function loadTrains(){
+            $.ajax({
+                type: "GET",
+                url: getTrainUrl,
+                dataType: "html",
+                success: function (html) {
+                    $("#cardsContainer").html(html);
+                    console.log(html);
+                },
+                error: function (req, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        loadTrains();
+
+        setInterval(loadTrains, 3000);
+
+
+
+    </script>
 }
-@* View Table/Cards *@
-<script src="js/toggleShow.js"></script>
+
