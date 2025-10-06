@@ -28,10 +28,11 @@ public class IncidentService :IIncidentService
                 {
                     StatusCode = 404,
                     Message = "No incidents found!",
-                    Data = new List<IncidentDto>()
+                    Data = null
                 };
             }
 
+            //Mapping 
             var dtos = entities.Select(e => new IncidentDto
             {
                 Username = e.Username,
@@ -67,7 +68,7 @@ public class IncidentService :IIncidentService
         {
             var train = await _trainRepository.GetByIdAsync(trainId);
 
-            if (train == null )
+            if (train == null)
                 return new BaseResponseModel<IncidentDto>
                 {
                     StatusCode = 404,
@@ -86,6 +87,7 @@ public class IncidentService :IIncidentService
                 Data = incidentDto
             };
         }
+        
         catch (Exception ex)
         {
             return new BaseResponseModel<IncidentDto>

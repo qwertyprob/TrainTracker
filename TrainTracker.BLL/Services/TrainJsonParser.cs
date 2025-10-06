@@ -21,15 +21,13 @@ public class TrainJsonParser
 
         var json = await File.ReadAllTextAsync(_filePath);
         var request = JsonConvert.DeserializeObject<JsonRequestModel>(json) ?? new JsonRequestModel();
-
         
-
         return request.Data?
             .Select(d =>
-        {
-            var train = d.Train;
-            train.Name = d.Name; // костыль для отображения имени
-            return train;
-        }).ToList() ?? new List<TrainDto>();
+            {
+                var train = d.Train;
+                train.Name = d.Name; // костыль для отображения имени
+                return train;
+            }).ToList() ?? new List<TrainDto>();
     }
 }

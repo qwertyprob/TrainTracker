@@ -8,8 +8,8 @@ namespace TrainTracker.BLL.Services;
 public class TrainService :ITrainService
 {
     private readonly ITrainRepository _trainRepository;
-    
-    private static bool isInitialized = false;
+
+    private static bool _isInitialized;
 
     public TrainService(ITrainRepository trainRepository)
     {
@@ -19,54 +19,111 @@ public class TrainService :ITrainService
 
     public async Task<BaseResponseModel<IEnumerable<TrainDto>>> GetAllTrainsAsync()
     {
-        var trainEntities = await _trainRepository.GetAllAsync();
-        
-        
-        if (!trainEntities.Any())
+        try
+        {
+            var trainEntities = await _trainRepository.GetAllAsync();
+
+
+            if (trainEntities == null || !trainEntities.Any())
+            {
+                return new BaseResponseModel<IEnumerable<TrainDto>>()
+                {
+                    StatusCode = 404,
+                    Message = "List of trains is empty!",
+                    Data = null
+                };
+            }
+
+            //Mapping TrainEntity to TrainDto
+            var mappedTrains = trainEntities
+                .Select(t => new TrainDto
+                {
+                    RawId = t.Id.ToString(), // Id нет сеттера
+                    Name = t.Name,
+                    RawNumber = t.Number.ToString(), // Number нет сеттера
+                    RawDelayTime = t.DelayTime,
+                    NextStation = new StationDto
+                    {
+                        RawId = t.NextStation!.Id.ToString(),
+                        Title = t.NextStation.StationTitle
+                    },
+                    Incidents = t.Incidents?
+                        .Select(i => new IncidentDto
+                        {
+                            Id = i.Id,
+                            Reason = i.Reason,
+                            Comment = i.Comment
+                        })
+                        .ToList()
+
+                }).OrderBy(x => x.DelayTime);
+
+
+
+            return new BaseResponseModel<IEnumerable<TrainDto>>()
+            {
+                StatusCode = 200,
+                Message = "Trains fetched successfully",
+                Data = mappedTrains
+            };
+        }
+        catch (Exception e)
         {
             return new BaseResponseModel<IEnumerable<TrainDto>>()
             {
-                StatusCode = 404,
-                Message = "Trains are not found!",
+                StatusCode = 500,
+                Message = $"Unexpected error:{e.Message}",
                 Data = null
             };
         }
         
-        //Mapping TrainEntity to TrainDto
-        var mappedTrains = trainEntities
-            .Select(t => new TrainDto
-            {
-                RawId = t.Id.ToString(), // Id нет сеттера
-                Name = t.Name,
-                RawNumber = t.Number.ToString(), // Number нет сеттера
-                RawDelayTime = t.DelayTime,
-                NextStation = t.NextStation is not null 
-                    ? new StationDto
-                    {
-                        RawId = t.NextStation.Id.ToString(),
-                        Title = t.NextStation.StationTitle
-                    }
-                    : null,
-                Incidents = t.Incidents?
-                    .Select(i => new IncidentDto
-                    {
-                        Id = i.Id,
-                        Reason = i.Reason,
-                        Comment = i.Comment
-                    })
-                    .ToList()
-                
-            }).OrderBy(x=>x.DelayTime);
         
-        
+    }
 
-        return new BaseResponseModel<IEnumerable<TrainDto>>()
+    public async Task<BaseResponseModel<TrainDto>> GetTrainByIdAsync(int id)
+    {
+        var trainEntity = await _trainRepository.GetByIdAsync(id);
+
+        if (trainEntity == null)
+        {
+            return new BaseResponseModel<TrainDto>()
+            {
+                StatusCode = 404,
+                Message = "Train doesn't exist!",
+                Data = new TrainDto()
+            };
+        }
+        
+        //Mapping 
+
+        var trainDto = new TrainDto()
+        {
+            RawId = trainEntity.Id.ToString(),
+            Name = trainEntity.Name,
+            RawNumber = trainEntity.Number.ToString(),
+            RawDelayTime = trainEntity.DelayTime,
+            NextStation = new StationDto()
+            {
+                RawId = trainEntity.NextStation!.Id.ToString(),
+                Title = trainEntity.NextStation.StationTitle
+            },
+            Incidents = trainEntity.Incidents?
+            .Select(i => new IncidentDto
+            {
+                Id = i.Id,
+                Reason = i.Reason,
+                Comment = i.Comment
+            })
+            .OrderBy(x=>x.CreatedAt)
+            .ToList()
+        };
+
+        return new BaseResponseModel<TrainDto>()
         {
             StatusCode = 200,
-            Message = "Trains fetched successfully",
-            Data = mappedTrains
+            Message = "Train found successfully!",
+            Data = trainDto
         };
-        
     }
 
     public async Task AddTrainAsync(TrainDto train)
@@ -79,10 +136,10 @@ public class TrainService :ITrainService
     public async Task ClearAllTrainsAsync()
     {
         //Удаляем все данные вначале 
-        if (!isInitialized)
+        if (!_isInitialized)
         {
             await _trainRepository.ClearAllAsync();
-            isInitialized = true;
+            _isInitialized = true;
         }
     }
 

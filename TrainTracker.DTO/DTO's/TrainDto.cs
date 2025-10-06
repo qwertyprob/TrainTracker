@@ -33,14 +33,14 @@ public class TrainDto
     } // Измененное время для сценария работы приложения
     
     [JsonProperty("nextStopObj")]
-    public StationDto NextStation { get; set; }
+    public StationDto? NextStation { get; set; }
     
     [JsonIgnore] 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     
     [JsonIgnore] 
     
-    public IEnumerable<IncidentDto> Incidents { get; set; } = new List<IncidentDto>();
+    public IEnumerable<IncidentDto>? Incidents { get; set; } = new List<IncidentDto>();
     
     //random
 
@@ -53,11 +53,11 @@ public class TrainDto
             case -1: 
                 return 0;
             case 0: 
-                return _random.Next(1, 5);   // 1…4
+                return 5;   // 1…4
             case 1: 
-                return _random.Next(6, 11);  // 6…10
+                return 10;  // 6…10
             case 4: 
-                return _random.Next(10, 20); // 10…19
+                return 20; // 10…19
             default: 
                 return 0;
         }
