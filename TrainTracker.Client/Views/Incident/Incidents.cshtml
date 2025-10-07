@@ -76,9 +76,9 @@
         let data = JSON.stringify({
             TrainId: trainId,
             IncidentDto: {
-                Username: $("#username").val(),
-                Reason: $("#reason").val(),
-                Comment: $("#comment").val()
+                Username: $("#username").val().trim(),
+                Reason: $("#reason").val().trim(),
+                Comment: $("#comment").val().trim()
             }
         });
 
@@ -101,18 +101,37 @@
 
                 for (let key in errors) {
                     const inputId = key.split('.').pop().toLowerCase();
-                    const errorMessages = errors[key];
                     $('#' + inputId).addClass('is-invalid');
+                    const label =$('#' + inputId + 'Label');
+
+                    const errorText = Array.isArray(errors[key]) ? errors[key][0] : errors[key];
+                    label.text("*"+errorText);
+                   
+                    
                 }
                 
             }
         }
-});
+        });
 
 
     $(document).ready(function() {
+        //reactive input
         
+        $('input').on('input', function() {
+            $(this).removeClass('is-invalid');
+            const label = $('#' + this.id + 'Label');
+            label.text('');
+        });
+        //reactive selector
+        $('input, textarea, select').on('input change', function() {
+            $(this).removeClass('is-invalid');
+            const label = $('#' + this.id + 'Label');
+            label.text('');
+        });
 
+       
+        
         loadIncidents();
     });
     

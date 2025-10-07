@@ -51,42 +51,60 @@
     <script src="~/js/toggleShow.js"></script>
 
     <script>
-    let getTrainUrl = '@Url.Action("LoadTrains", "Train")';
-    let getTableUrl = '@Url.Action("LoadTable", "Train")';
-
-    async function loadTrains() {
-        try {
-            const response = await fetch(getTrainUrl);
-            const html = await response.text();
-            // Проверка на открытую модалку
-            if (!document.querySelector('#trainModal.show')) {
-                document.querySelector("#cardsContainer").innerHTML = html;
-            }
-        } catch (err) {
-            console.error(err);
+        function getCardById(){
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const trainId = card.id;
+                console.log(trainId);
+            });}
+            
+        let getTrainUrl = '@Url.Action("LoadTrains", "Train")';
+        let getTableUrl = '@Url.Action("LoadTable", "Train")';
+        
+        
+        let displayedIds = new Set();
+        
+        function loadTrains(){
+            
+            $.ajax({
+                type: "GET",
+                url: getTrainUrl,
+                dataType: "html",
+                success: function (html) {
+                    $("#cardsContainer").html(html);
+                    
+                },
+                error: function (req, status, error) {
+                    console.log(error);
+                }
+            });
+            
         }
-    }
-
-    async function loadTable() {
-        try {
-            const response = await fetch(getTableUrl);
-            const html = await response.text();
-            // Проверяем, что модалка не открыта
-            if (!document.querySelector('#tableModal.show')) {
-                document.querySelector("#tableContainer").innerHTML = html;
-            }
-        } catch (err) {
-            console.error(err);
+        function loadTable() {
+            $.ajax({
+                type: "GET",
+                url: getTableUrl,
+                dataType: "html",
+                success: function(html) {
+                    $("#tableContainer").html(html);
+                },
+                error: function(req, status, error) {
+                    console.log(error);
+                }
+            });
         }
-    }
+        
 
-    loadTrains();
-    loadTable();
-    
-    setInterval(() => {
         loadTrains();
         loadTable();
-    }, 5000);
-</script>
+
+
+        setInterval(loadTrains, 5000);
+        setInterval(loadTable, 5000);
+
+
+
+
+    </script>
 }
 
