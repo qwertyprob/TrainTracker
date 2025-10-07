@@ -1,15 +1,25 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using TrainTracker.BLL.Interfaces;
 using TrainTracker.BLL.Services;
+using TrainTracker.BLL.Services.BackgroundServices;
 using TrainTracker.DAL.Entities;
 using TrainTracker.DAL.Interfaces;
 using TrainTracker.DAL.Repositories;
+using TrainTracker.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+//Fluent Validation
+builder.Services.AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters();
+
+builder.Services.AddValidatorsFromAssemblyContaining<IncidentValidator>();
 
 var connectionString = builder.Configuration.GetConnectionString("MariaDbConnectionString");
 
@@ -34,8 +44,10 @@ builder.Services.AddScoped<ITrainService, TrainService>();
 builder.Services.AddScoped<IIncidentService, IncidentService>();
 builder.Services.AddSingleton<TrainJsonParser>();
 
-
+//BackgroundServices
 builder.Services.AddHostedService<TrainSimulationBackgroundService>();
+builder.Services.AddHostedService<TrainDelayUpdateBackgroundService>();
+
 
 var app = builder.Build();
 
@@ -56,14 +68,19 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
+
 //Dashboard
 app.MapControllerRoute(
     name: "dashboard",
-    pattern: "{controller=Train}/{action=Index}");
+    pattern: "{controller=Train}/{action=Trains}");
 
-//TrainInfo
+
+//Incidents
 app.MapControllerRoute(
-    name: "traininfo",
-    pattern: "{controller=Train}/{action=TrainInfo}/{id?}");
+    name: "incidents",
+    pattern: "{controller=Incident}/{action=Incidents}/{id}");
+
+
 
 app.Run();

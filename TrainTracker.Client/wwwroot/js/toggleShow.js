@@ -8,7 +8,7 @@ function toggleShow() {
     const tableTxt = document.getElementById('tableTxt');
     const cardsTxt = document.getElementById('cardsTxt');
 
-    tableBtn.addEventListener('click', function () {
+    function showTable() {
         tableRow.classList.add('visible');
         tableRow.classList.remove('hidden');
 
@@ -20,9 +20,11 @@ function toggleShow() {
 
         tableBtn.classList.add('active');
         cardsBtn.classList.remove('active');
-    });
 
-    cardsBtn.addEventListener('click', function () {
+        localStorage.setItem('trainView', 'table');
+    }
+
+    function showCards() {
         cardsRow.classList.add('visible');
         cardsRow.classList.remove('hidden');
 
@@ -34,7 +36,22 @@ function toggleShow() {
 
         cardsBtn.classList.add('active');
         tableBtn.classList.remove('active');
-    });
+
+        localStorage.setItem('trainView', 'cards');
+    }
+
+    tableBtn.addEventListener('click', showTable);
+    cardsBtn.addEventListener('click', showCards);
+
+    const savedView = localStorage.getItem('trainView');
+    if (savedView === 'cards') {
+        showCards();
+    } else {
+        showTable();
+    }
+    
 }
 
-toggleShow();
+document.addEventListener('DOMContentLoaded', () => {
+    toggleShow();
+});

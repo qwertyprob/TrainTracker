@@ -38,4 +38,10 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
+@media(max-width:374px){
+    .view-text{
+        font-size: 1.2rem !important;
+    }
+}
+
 

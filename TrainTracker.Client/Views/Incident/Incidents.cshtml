@@ -1,18 +1,18 @@
-@model int
+@model TrainDto 
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Incidents";
 }
 
 
-<div class="container">
+<div class="container" id="content">
     
     <div class="row mt-3">
         <div class="col-12 bg-white rounded mt-4 pt-2" >
             <div class="row align-items-center">
                 <div class="col-6">
                     <div class="d-flex justify-content-start align-items-center p-2 gap-2">
-                        <h2 class="view-text">Incidents:</h2>
+                        <h2 class="view-text">@Model.Name</h2>
                     </div>
                 </div>
 
@@ -30,33 +30,94 @@
     @await Html.PartialAsync("Components/Modal")
 
     @* List of incidents *@
-    <div class="row mt-3 mb-5" id="tableRow">
-        <div class="col-12 p-0 border-0 ">
-            <div class="bg-white rounded p-3 ">
-
-                <div class="row g-3 pb-4 pt-4">
-                    @for (int i = 0; i < 4; i++)
-                    {
-                        <div class="col-12 col-md-6 ">
-                            
-                                <div class="p-3 bg-light rounded shadow-sm h-100 wrapper">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <h6 class="fw-bold mb-1">JohnDoe</h6>
-                                        <span class="badge bg-danger">Critical</span>
-                                    </div>
-                                    <p class="mb-1 text-danger">Reason: Delay at station Riga</p>
-                                    <small class="text-muted d-block">Comment: Technical inspection caused 15 min delay</small>
-                                </div>
-                        </div>
-                    }
-                </div>
-
-            </div>
-        </div>
+    <div id="incidentContainer">
     </div>
 
 
 </div>
+@section Scripts
+{ 
 
+    <script src="~/js/closeModal.js"></script>
+
+    <script>
+
+    let trainId;
+    let addIncidentUrl = '@Url.Action("AddIncidentAsync", "Incident")';
+    let getIncidentUrl ='@Url.Action("LoadIncidents", "Incident")'
+        
+    function loadIncidents(){
+        trainId = @Model.Id;
+        $.ajax({
+    
+            type: "GET",
+            url: getIncidentUrl,
+            data:{id:trainId},
+            dataType: "html",
+            success: function (html) {
+                $("#incidentContainer").html(html);
+            },
+            error: function (xhr) {
+                if (xhr.status == 400 ){
+                    //
+                }
+            }
+        });
+    }
+
+    $("#incidentForm").submit(async function(e) {
+        e.preventDefault();
+
+        // Для визуала
+        $('#incidentForm .is-invalid').removeClass('is-invalid');
+        
+        $('#errors').html('');
+
+        let data = JSON.stringify({
+            TrainId: trainId,
+            IncidentDto: {
+                Username: $("#username").val(),
+                Reason: $("#reason").val(),
+                Comment: $("#comment").val()
+            }
+        });
+
+        try {
+            const response = await $.ajax({
+                type: "POST",
+                url: addIncidentUrl,
+                contentType: "application/json",
+                data: data
+            });
+
+            $("#incidentForm")[0].reset();
+            $("#incidentModal").fadeOut();
+            loadIncidents();
+            closeModal('incidentModal');
+
+        } catch (xhr) {
+            if (xhr.status === 400) {
+                const errors = xhr.responseJSON;
+
+                for (let key in errors) {
+                    const inputId = key.split('.').pop().toLowerCase();
+                    const errorMessages = errors[key];
+                    $('#' + inputId).addClass('is-invalid');
+                }
+                
+            }
+        }
+});
+
+
+    $(document).ready(function() {
+        
+
+        loadIncidents();
+    });
+    
+    
+    </script>
+}
 
 

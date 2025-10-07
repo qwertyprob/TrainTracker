@@ -1,21 +1,11 @@
-﻿@model BaseResponseModel<IEnumerable<TrainDto>>
-@{
+﻿@{
+    Layout = "_Layout";
     ViewData["Title"] = "Dashboard";
 }
-@if (@Model.StatusCode != StatusCodes.Status200OK)
-{
-    <div class="container">
-        <div class="row mt-3" style="margin-top: 15em!important;">
-            <div class="loader"></div>
-            <div class="row mt-3">
-                <h1 class="text-center black bold">@Model.Message</h1>
-            </div>
-        </div>
-    </div>
-}
-else
-{
-    <div class="container">
+
+    
+
+    <div class="container" id="content">
         <div class="row mt-3">
             <div class="d-flex bg-white rounded mt-4 pt-2">
                 <div class="col-6 ">
@@ -48,43 +38,55 @@ else
         @* TABLE *@
         <div class="row mt-3" id="tableRow">
             <div class="bg-white rounded pt-2">
-                @await Html.PartialAsync("Components/Table", Model.Data)
+                <div id="tableContainer"></div>
             </div>
         </div>
     
     </div>
 
-}
+
 @section Scripts
 {
     @* View Table/Cards *@
     <script src="~/js/toggleShow.js"></script>
-    
+
     <script>
-        let getTrainUrl = '@Url.Action("LoadTrainsAsync", "Train")';
-        console.log(getTrainUrl);
+    let getTrainUrl = '@Url.Action("LoadTrains", "Train")';
+    let getTableUrl = '@Url.Action("LoadTable", "Train")';
 
-        function loadTrains(){
-            $.ajax({
-                type: "GET",
-                url: getTrainUrl,
-                dataType: "html",
-                success: function (html) {
-                    $("#cardsContainer").html(html);
-                    console.log(html);
-                },
-                error: function (req, status, error) {
-                    console.log(error);
-                }
-            });
+    async function loadTrains() {
+        try {
+            const response = await fetch(getTrainUrl);
+            const html = await response.text();
+            // Проверка на открытую модалку
+            if (!document.querySelector('#trainModal.show')) {
+                document.querySelector("#cardsContainer").innerHTML = html;
+            }
+        } catch (err) {
+            console.error(err);
         }
+    }
 
+    async function loadTable() {
+        try {
+            const response = await fetch(getTableUrl);
+            const html = await response.text();
+            // Проверяем, что модалка не открыта
+            if (!document.querySelector('#tableModal.show')) {
+                document.querySelector("#tableContainer").innerHTML = html;
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    loadTrains();
+    loadTable();
+    
+    setInterval(() => {
         loadTrains();
-
-        setInterval(loadTrains, 3000);
-
-
-
-    </script>
+        loadTable();
+    }, 5000);
+</script>
 }
 

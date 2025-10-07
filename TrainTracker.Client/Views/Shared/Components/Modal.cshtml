@@ -18,13 +18,14 @@
                 <form id="incidentForm">
 
                     <div class="mb-3">
-                        <label for="username" class="form-label fw-bold text-secondary">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your name" required>
+                        <label class="form-label fw-bold text-secondary">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your name">
+                        <label class="form-label text-danger ps-1" for="username" id="usernameLabel"></label>
                     </div>
 
                     <div class="mb-3">
-                        <label for="reason" class="form-label fw-bold text-secondary">Reason</label>
-                        <select class="form-select" id="reason" name="reason" required>
+                        <label class="form-label fw-bold text-secondary">Reason</label>
+                        <select class="form-select" id="reason" name="reason">
                             <option value="">Choose reason...</option>
                             <option value="delay">Delay</option>
                             <option value="technical">Technical issue</option>
@@ -37,6 +38,7 @@
                             <option value="schedule">Schedule adjustment</option>
                             <option value="other">Other</option>
                         </select>
+                        <label class="form-label text-danger ps-1" for="reason" id="reasonLabel"></label>
                     </div>
 
 
@@ -55,7 +57,7 @@
                     <span>Close</span>
                 </button>
 
-                <button type="submit" form="incidentForm" class="btn btn-secondary d-flex align-items-center justify-content-center gap-1" onclick="playSound()">
+                <button type="submit" form="incidentForm" class="btn btn-secondary d-flex align-items-center justify-content-center gap-1">
                     <i class="bi bi-save"></i>
                     <span>Save Incident</span>
                 </button>
@@ -65,3 +67,11 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+
+    <script>
+        
+    </script>
+}

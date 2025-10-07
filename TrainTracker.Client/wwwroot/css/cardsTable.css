@@ -1,5 +1,4 @@
 
-
 .wrapper {
     transition: all 0.5s ease; 
 }
@@ -62,9 +61,6 @@
 }
     
 
-
-
-
 .train-number{
     display: inline-block;
     color: var(--ligt-color) !important;
@@ -94,6 +90,18 @@
     50%  { background-color: #e6ffed; } 
     100% { background-color: #ffffff; }
 }
+
+.new-card {
+    opacity: 0;
+    transform: translateY(10px); 
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.new-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
 
 

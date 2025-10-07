@@ -20,7 +20,7 @@ public class TrainService :ITrainService
         {
             var trainEntities = await _trainRepository.GetAllAsync();
 
-            if (trainEntities == null ||trainEntities!.Count() != 0)
+            if (trainEntities == null ||!trainEntities!.Any())
             {
                 return new BaseResponseModel<IEnumerable<TrainDto>>()
                 {
@@ -156,18 +156,14 @@ public class TrainService :ITrainService
     }
     
     //Меняем время задержки
-    public async Task ChangeDelayTimeAsync(long id, int delayTime)
-    {
-        var train = await this.GetTrainByIdAsync(id);
-
-        if (train.Data == null)
-        {
-            return;
-        }
-
-        await _trainRepository.ChangeDelayTimeAsync(id, delayTime);
-
-    }
+   public async Task<bool> ChangeDelayTimeAsync(long id, int delayTime)
+   {
+       var train = await GetTrainByIdAsync(id);
+       if (train?.Data == null) return false;
+   
+       await _trainRepository.ChangeDelayTimeAsync(id, delayTime);
+       return true;
+   }
     
     //Деактивируем данные, а не удаляем
     public async Task<BaseResponseModel<TrainDto>> DeactivateTrainByIdAsync(long id)

@@ -1,7 +1,15 @@
+#header-background{
+    padding-bottom: 100px!important;
+}
+#row-background{
+    background-color: var(--header-color) !important;
+}
+
 header {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1030; background-color: var(--header-color) !important;
     background-color: var(--header-color);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.19);
-    padding: 0.5rem 1rem;
+    padding: 0rem 1rem;
     
 }
 
@@ -93,6 +101,10 @@ header {
     }
     
 }
+#content{
+    
+    padding-top: 100px !important;
 
+}
 
 

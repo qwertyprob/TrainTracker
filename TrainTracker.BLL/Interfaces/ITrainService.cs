@@ -15,6 +15,6 @@ public interface ITrainService
      Task<BaseResponseModel<TrainDto>> DeactivateTrainByIdAsync(long id);
      
      //Изменить время задержки поезда
-     Task ChangeDelayTimeAsync(long id, int delayTime);
-     
+     Task<bool> ChangeDelayTimeAsync(long id, int delayTime);
+
 }

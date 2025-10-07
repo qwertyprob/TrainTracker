@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using TrainTracker.BLL;
 using TrainTracker.BLL.Interfaces;
 using TrainTracker.DTO;
 using TrainTracker.Models;
@@ -9,53 +10,40 @@ namespace TrainTracker.Controllers;
 public class TrainController : Controller
 {
     private readonly ITrainService _trainService;
-    private readonly IIncidentService _incidentService;
 
 
-    public TrainController(ITrainService trainService, IIncidentService incidetService)
+    public TrainController(ITrainService trainService)
     {
         _trainService = trainService;
-        _incidentService = incidetService;
     }
     
-    [HttpGet]
-    [Route("/trains")]
-    public async Task<IActionResult> TestTrains()
+    // Ajax - GET
+    [HttpGet("/LoadTrains")]
+    public async Task<IActionResult> LoadTrains()
     {
-        var model = await _trainService.GetAllTrainsAsync();
-        
-        
-        return Json(model);
+        var model = await _trainService.GetAllTrainsAsync() ?? new BaseResponseModel<IEnumerable<TrainDto>>();
+        return PartialView("Components/Cards", model);
     }
-    
-    [HttpGet]
-    [Route("/incidents/{trainId}")]
-    public async Task<IActionResult> TestIncidents(long trainId)
-    {
 
-        var model = await _incidentService.GetAllIncidentsAsync(trainId);
-
-        return View("Error",model.Message);
-        
-
-    }
-    
-    
-    public async Task<IActionResult> Index()
+    [HttpGet("/LoadTable")]
+    public async Task<IActionResult> LoadTable()
     {
-        var model = await _trainService.GetAllTrainsAsync();
-        
-        
-        return View(model);
+        var model = await _trainService.GetAllTrainsAsync() ?? new BaseResponseModel<IEnumerable<TrainDto>>();
+        return PartialView("Components/Table", model);
     }
+
     
-    [Route("/TrainInfo/{id}")]
-    public async Task<IActionResult> TrainInfo(int id)
+   
+    
+    
+    public  IActionResult Trains()
     {
         
         
-        return View(id);
+        return View();
     }
+    
+   
     
 
     
