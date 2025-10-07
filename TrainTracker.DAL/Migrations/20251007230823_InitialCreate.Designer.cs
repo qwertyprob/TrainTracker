@@ -11,8 +11,8 @@ using TrainTracker.DAL.Entities;
 namespace TrainTracker.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251001101718_TrainName")]
-    partial class TrainName
+    [Migration("20251007230823_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,6 +30,12 @@ namespace TrainTracker.DAL.Migrations
 
                     b.Property<string>("Comment")
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Reason")
                         .IsRequired()
@@ -51,9 +57,12 @@ namespace TrainTracker.DAL.Migrations
 
             modelBuilder.Entity("TrainTracker.DAL.Entities.StationEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("StationTitle")
                         .IsRequired()
@@ -76,10 +85,16 @@ namespace TrainTracker.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<int>("DelayTime")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("LastUpdate")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastDelayUpdateAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
