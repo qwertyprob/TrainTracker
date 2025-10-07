@@ -7,10 +7,7 @@ namespace TrainTracker.BLL.Services;
 public class IncidentService :IIncidentService
 {
     private readonly IIncidentRepository _incidentRepository;
-    
     private readonly ITrainService _trainService;
-
-
     public IncidentService(IIncidentRepository incidentRepository,ITrainService trainService)
     {
         _incidentRepository = incidentRepository;
@@ -61,8 +58,6 @@ public class IncidentService :IIncidentService
             };
         }
     }
-
-
     public async Task<BaseResponseModel<IncidentDto>> AddIncidentAsync(IncidentDto incidentDto, long trainId)
     {
         try

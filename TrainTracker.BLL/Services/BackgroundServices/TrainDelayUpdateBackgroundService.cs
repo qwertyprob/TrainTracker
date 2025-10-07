@@ -6,12 +6,12 @@ using TrainTracker.DTO;
 
 namespace TrainTracker.BLL.Services.BackgroundServices;
 
-public class TrainDelayCheckerBackgroundService : BackgroundService
+public class TrainDelayUpdateBackgroundService : BackgroundService
 {
     private readonly IServiceScopeFactory _scopeFactory;
     private static bool _initialized;
 
-    public TrainDelayCheckerBackgroundService(IServiceScopeFactory scopeFactory)
+    public TrainDelayUpdateBackgroundService(IServiceScopeFactory scopeFactory)
     {
         _scopeFactory = scopeFactory;
     }

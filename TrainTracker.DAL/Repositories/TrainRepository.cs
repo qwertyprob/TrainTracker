@@ -8,7 +8,6 @@ namespace TrainTracker.DAL.Repositories;
 public class TrainRepository : ITrainRepository
 {
     private readonly AppDbContext _context;
-
     public TrainRepository(AppDbContext context)
     {
         _context = context;
@@ -103,5 +102,8 @@ public class TrainRepository : ITrainRepository
         await _context.SaveChangesAsync();
         
     }
+    
+    
+    
 
 }

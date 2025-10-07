@@ -8,27 +8,23 @@ namespace TrainTracker.BLL.Services;
 public class TrainService :ITrainService
 {
     private readonly ITrainRepository _trainRepository;
-
     private static bool _isInitialized;
-
     public TrainService(ITrainRepository trainRepository)
     {
         _trainRepository = trainRepository;
 
     }
-
     public async Task<BaseResponseModel<IEnumerable<TrainDto>>> GetAllTrainsAsync()
     {
         try
         {
             var trainEntities = await _trainRepository.GetAllAsync();
 
-
-            if (trainEntities == null || !trainEntities.Any())
+            if (trainEntities == null ||trainEntities!.Count() != 0)
             {
                 return new BaseResponseModel<IEnumerable<TrainDto>>()
                 {
-                    StatusCode = 404,
+                    StatusCode = 400,
                     Message = "List of trains is empty!",
                     Data = new List<TrainDto>()
                 };
@@ -60,8 +56,6 @@ public class TrainService :ITrainService
 
                 }).OrderBy(x => x.DelayTime);
 
-
-
             return new BaseResponseModel<IEnumerable<TrainDto>>()
             {
                 StatusCode = 200,
@@ -81,7 +75,6 @@ public class TrainService :ITrainService
         
         
     }
-
     public async Task<BaseResponseModel<TrainDto>> GetTrainByIdAsync(long id)
     {
         var trainEntity = await _trainRepository.GetByIdAsync(id);
@@ -128,7 +121,6 @@ public class TrainService :ITrainService
             Data = trainDto
         };
     }
-    
     public async Task<BaseResponseModel<TrainDto>> AddTrainAsync(TrainDto train)
     {
         try
