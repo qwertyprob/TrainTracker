@@ -30,7 +30,7 @@ public class TrainService :ITrainService
                 {
                     StatusCode = 404,
                     Message = "List of trains is empty!",
-                    Data = null
+                    Data = new List<TrainDto>()
                 };
             }
 
@@ -41,7 +41,9 @@ public class TrainService :ITrainService
                     RawId = t.Id.ToString(), // Id нет сеттера
                     Name = t.Name,
                     RawNumber = t.Number.ToString(), // Number нет сеттера
-                    RawDelayTime = t.DelayTime,
+                    DelayTime = t.DelayTime,
+                    CreatedAt = t.CreatedAt,
+                    LastDelayUpdateAt = t.LastDelayUpdateAt,
                     NextStation = new StationDto
                     {
                         RawId = t.NextStation!.Id.ToString(),
@@ -73,14 +75,14 @@ public class TrainService :ITrainService
             {
                 StatusCode = 500,
                 Message = $"Unexpected error:{e.Message}",
-                Data = null
+                Data = new List<TrainDto>()
             };
         }
         
         
     }
 
-    public async Task<BaseResponseModel<TrainDto>> GetTrainByIdAsync(int id)
+    public async Task<BaseResponseModel<TrainDto>> GetTrainByIdAsync(long id)
     {
         var trainEntity = await _trainRepository.GetByIdAsync(id);
 
@@ -101,7 +103,8 @@ public class TrainService :ITrainService
             RawId = trainEntity.Id.ToString(),
             Name = trainEntity.Name,
             RawNumber = trainEntity.Number.ToString(),
-            RawDelayTime = trainEntity.DelayTime,
+            DelayTime = trainEntity.DelayTime,
+            LastDelayUpdateAt = trainEntity.LastDelayUpdateAt,
             NextStation = new StationDto()
             {
                 RawId = trainEntity.NextStation!.Id.ToString(),
@@ -125,14 +128,92 @@ public class TrainService :ITrainService
             Data = trainDto
         };
     }
-
-    public async Task AddTrainAsync(TrainDto train)
+    
+    public async Task<BaseResponseModel<TrainDto>> AddTrainAsync(TrainDto train)
     {
-
-        await _trainRepository.AddAsync(train);
+        try
+        {
+            if (train == null)
+            {
+                return new BaseResponseModel<TrainDto>
+                {
+                    StatusCode = 400,
+                    Message = "Train data is null!",
+                    Data = null
+                };
+            }
+    
+            await _trainRepository.AddAsync(train);
+    
+            return new BaseResponseModel<TrainDto>
+            {
+                StatusCode = 200,
+                Message = "Train added successfully!",
+                Data = train
+            };
+        }
+        catch (Exception ex)
+        {
+            return new BaseResponseModel<TrainDto>
+            {
+                StatusCode = 500,
+                Message = $"Error adding train: {ex.Message}",
+                Data = null
+            };
+        }
     }
+    
+    //Меняем время задержки
+    public async Task ChangeDelayTimeAsync(long id, int delayTime)
+    {
+        var train = await this.GetTrainByIdAsync(id);
 
+        if (train.Data == null)
+        {
+            return;
+        }
 
+        await _trainRepository.ChangeDelayTimeAsync(id, delayTime);
+
+    }
+    
+    //Деактивируем данные, а не удаляем
+    public async Task<BaseResponseModel<TrainDto>> DeactivateTrainByIdAsync(long id)
+    {
+        try
+        {
+            var trainById = await _trainRepository.GetByIdAsync(id);
+
+            if (trainById == null)
+            {
+                return new BaseResponseModel<TrainDto>()
+                {
+                    StatusCode = 400,
+                    Message = "Train doesn't exist!",
+                    Data = null
+                };
+            }
+
+            await _trainRepository.DeactivateByIdAsync(id);
+            return new BaseResponseModel<TrainDto>()
+            {
+                StatusCode = 200,
+                Message = "Train successfully deleted!",
+                Data = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new BaseResponseModel<TrainDto>()
+            {
+                StatusCode = 500,
+                Message = $"Unexpected error:{e.Message}",
+                Data = null
+            };
+        }
+    }
+    
+    //Удаление данных, так как это данные из json
     public async Task ClearAllTrainsAsync()
     {
         //Удаляем все данные вначале 

@@ -21,31 +21,33 @@ public class TrainDto
     public int Number => int.TryParse(RawNumber, out var result) ? result : 0;
     
     [JsonProperty("arrivingTime")]
-    public int RawDelayTime { get; set; }
+    public int RawDelayTime { get; set; } //Время из JSON парсинга
 
     [JsonIgnore] 
-    public int DelayTime {
-        get
-        {
-            return this.MapToAnotherTime(RawDelayTime);
-        }
-        
+    private int? _customDelayTime;
+
+    [JsonIgnore] 
+    public int DelayTime //Время в БД
+    {
+        get => _customDelayTime ?? MapToAnotherTime(RawDelayTime);
+        set => _customDelayTime = value;
     } // Измененное время для сценария работы приложения
     
     [JsonProperty("nextStopObj")]
     public StationDto? NextStation { get; set; }
     
     [JsonIgnore] 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; }
     
     [JsonIgnore] 
+    public DateTime? LastDelayUpdateAt { get; set; }
+
+    [JsonIgnore] 
+    public bool IsActive { get; set; } = true;
     
+    [JsonIgnore] 
     public IEnumerable<IncidentDto>? Incidents { get; set; } = new List<IncidentDto>();
     
-    //random
-
-    private static readonly Random _random = new Random(); 
-
     private int MapToAnotherTime(int rawDelayTime)
     {
         switch (rawDelayTime)
@@ -53,11 +55,15 @@ public class TrainDto
             case -1: 
                 return 0;
             case 0: 
-                return 5;   // 1…4
+                return new Random().Next(1,5);   // 1…4
             case 1: 
-                return 10;  // 6…10
+                return new Random().Next(6,10); // 6…10
+            case 2: 
+                return new Random().Next(1,5);
+            case 3: 
+                return new Random().Next(6,15);
             case 4: 
-                return 20; // 10…19
+                return new Random().Next(1,9); // 10…19
             default: 
                 return 0;
         }

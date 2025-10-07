@@ -5,6 +5,7 @@ using TrainTracker.DTO;
 
 namespace TrainTracker.BLL.Services;
 
+//Класс который парсит json файл в нужные нам данные
 public class TrainJsonParser
 {
     private readonly string _filePath;
@@ -16,18 +17,25 @@ public class TrainJsonParser
 
     public async Task<List<TrainDto>> ParseAsync()
     {
-        if (!File.Exists(_filePath))
-            return new List<TrainDto>();
+        try
+        {
+            if (!File.Exists(_filePath))
+                return new List<TrainDto>();
 
-        var json = await File.ReadAllTextAsync(_filePath);
-        var request = JsonConvert.DeserializeObject<JsonRequestModel>(json) ?? new JsonRequestModel();
+            var json = await File.ReadAllTextAsync(_filePath);
+            var request = JsonConvert.DeserializeObject<JsonRequestModel>(json) ?? new JsonRequestModel();
         
-        return request.Data?
-            .Select(d =>
-            {
-                var train = d.Train;
-                train.Name = d.Name; // костыль для отображения имени
-                return train;
-            }).ToList() ?? new List<TrainDto>();
+            return request.Data?
+                .Select(d =>
+                {
+                    var train = d.Train;
+                    train.Name = d.Name; // костыль для отображения имени
+                    return train;
+                }).ToList() ?? new List<TrainDto>();
+        }
+        catch (Exception e)
+        {
+            return new List<TrainDto>(); // Что б не выводить null или exception
+        }
     }
 }

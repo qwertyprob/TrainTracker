@@ -7,13 +7,14 @@ namespace TrainTracker.BLL.Services;
 public class IncidentService :IIncidentService
 {
     private readonly IIncidentRepository _incidentRepository;
-    private readonly ITrainRepository _trainRepository;
+    
+    private readonly ITrainService _trainService;
 
 
-    public IncidentService(IIncidentRepository incidentRepository, ITrainRepository trainRepository)
+    public IncidentService(IIncidentRepository incidentRepository,ITrainService trainService)
     {
         _incidentRepository = incidentRepository;
-        _trainRepository = trainRepository;
+        _trainService = trainService;
 
     }
     public async Task<BaseResponseModel<List<IncidentDto>>> GetAllIncidentsAsync(long trainId)
@@ -26,14 +27,14 @@ public class IncidentService :IIncidentService
             {
                 return new BaseResponseModel<List<IncidentDto>>
                 {
-                    StatusCode = 404,
+                    StatusCode = 404, //это не ошибка, все под контролем
                     Message = "No incidents found!",
-                    Data = null
+                    Data = new List<IncidentDto>()
                 };
             }
 
             //Mapping 
-            var dtos = entities.Select(e => new IncidentDto
+            var dtos = entities!.Select(e => new IncidentDto
             {
                 Username = e.Username,
                 Reason = e.Reason,
@@ -66,9 +67,9 @@ public class IncidentService :IIncidentService
     {
         try
         {
-            var train = await _trainRepository.GetByIdAsync(trainId);
+            var train = await _trainService.GetTrainByIdAsync(trainId);
 
-            if (train == null)
+            if (train.Data == null)
                 return new BaseResponseModel<IncidentDto>
                 {
                     StatusCode = 404,
@@ -79,6 +80,9 @@ public class IncidentService :IIncidentService
 
             //Добавление 
             await _incidentRepository.AddAsync(incidentDto, trainId);
+            
+            //Увеличиваем время после добавления инцидента на 5 минут
+            await _trainService.ChangeDelayTimeAsync(trainId,train.Data.DelayTime + 5);
 
             return new BaseResponseModel<IncidentDto>
             {

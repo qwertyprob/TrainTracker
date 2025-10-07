@@ -1555,7 +1555,7 @@
                     24.31990686
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 0,
+                "arrivingTime": 4,
                 "nextStopObj": {
                     "coords": [
                         56.8940829,
@@ -2299,7 +2299,7 @@
                     23.820754033333333
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 0,
+                "arrivingTime": 2,
                 "nextStopObj": {
                     "coords": [
                         56.9735865,
@@ -2892,7 +2892,7 @@
                     24.117817
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 1,
+                "arrivingTime": 3,
                 "nextStopObj": {
                     "coords": [
                         56.94657695310882,
@@ -3485,7 +3485,7 @@
                     24.1150727
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 0,
+                "arrivingTime": 1,
                 "nextStopObj": {
                     "coords": [
                         57.0570972,
@@ -4006,7 +4006,7 @@
                     25.311176449999998
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 0,
+                "arrivingTime": 2,
                 "nextStopObj": {
                     "coords": [
                         57.23863785,
@@ -4359,7 +4359,7 @@
                     24.41301946
                 ],
                 "waitingTime": 30000,
-                arrivingTime: 1,
+                arrivingTime: 2,
                 "nextStopObj": {
                     "coords": [
                         57.06484354,
@@ -4712,7 +4712,7 @@
                     24.45613249333333
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 0,
+                "arrivingTime": 3,
                 "nextStopObj": {
                     "coords": [
                         57.04646384,
@@ -5456,7 +5456,7 @@
                     23.8355173
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 1,
+                "arrivingTime": 3,
                 "nextStopObj": {
                     "coords": [
                         56.9735865,
@@ -6136,7 +6136,7 @@
                     24.4675579
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 2,
+                "arrivingTime": 4,
                 "nextStopObj": {
                     "coords": [
                         56.8156557,
@@ -6551,7 +6551,7 @@
                     23.9648989
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 1,
+                "arrivingTime": 4,
                 "nextStopObj": {
                     "coords": [
                         56.7864997,
@@ -6966,7 +6966,7 @@
                     23.93860825
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 0,
+                "arrivingTime": 2,
                 "nextStopObj": {
                     "coords": [
                         56.7864997,
@@ -7487,7 +7487,7 @@
                     24.1147902
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 0,
+                "arrivingTime": 2,
                 "nextStopObj": {
                     "coords": [
                         57.0570972,
@@ -8016,7 +8016,7 @@
                     24.25888396
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 4,
+                "arrivingTime": 1,
                 "nextStopObj": {
                     "coords": [
                         56.8643751,
@@ -8609,7 +8609,7 @@
                     24.12102007026169
                 ],
                 "waitingTime": 30000,
-                "arrivingTime": 0,
+                "arrivingTime": 1,
                 "nextStopObj": {
                     "coords": [
                         56.9327039,
