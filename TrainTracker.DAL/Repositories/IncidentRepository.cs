@@ -21,8 +21,6 @@ public class IncidentRepository: IIncidentRepository
             .FirstOrDefaultAsync(x => x.Id== id);
     }
     
-    
-
     public async Task<IEnumerable<IncidentEntity>> GetAllByTrainAsync(long trainId)
     {
         var train = await _context.Trains
@@ -35,8 +33,6 @@ public class IncidentRepository: IIncidentRepository
         return train.Incidents ?? Enumerable.Empty<IncidentEntity>();
     }
 
-
-
     public async Task<IncidentEntity> AddAsync(IncidentDto incident,long trainId)
     {
         var incidentEntity = new IncidentEntity()
@@ -45,6 +41,7 @@ public class IncidentRepository: IIncidentRepository
             Username = incident.Username,
             Reason = incident.Reason,
             Comment = incident.Comment,
+            CreatedAt = DateTime.UtcNow.AddHours(3)
         };
 
         await _context.Incidents.AddAsync(incidentEntity);
@@ -58,10 +55,8 @@ public class IncidentRepository: IIncidentRepository
     public async Task DeleteAsync(int id)
     {
         var incident = await this.GetByIdAsync(id);
-        if (incident == null) 
-            return;
 
-        _context.Incidents.Remove(incident);
+        _context.Incidents.Remove(incident!);
         await _context.SaveChangesAsync();
     }
 

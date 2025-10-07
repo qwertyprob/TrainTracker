@@ -12,6 +12,8 @@ public class IncidentEntity
     
     public DateTime CreatedAt { get; set; }
     
+    public bool IsActive { get; set; }
+    
     //Связь 1:M TrainEntity
     public long TrainId { get; set; } // FK
     public TrainEntity Train { get; set; }

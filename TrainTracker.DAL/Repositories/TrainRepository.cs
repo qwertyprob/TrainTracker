@@ -22,15 +22,14 @@ public class TrainRepository : ITrainRepository
             .FirstOrDefaultAsync(train => train.Id == id);
 
     }
-
     public async Task<IEnumerable<TrainEntity>> GetAllAsync()
     {
         return await _context.Trains
             .Include(t => t.NextStation)
             .Include(t => t.Incidents)
+            .Where(x=>x.IsActive == true)
             .ToListAsync();
     }
-
     public async Task AddAsync(TrainDto train)
     {
         var trainEntity = new TrainEntity()
@@ -38,13 +37,14 @@ public class TrainRepository : ITrainRepository
             Id = train.Id,
             Name = train.Name,
             Number = train.Number,
-            DelayTime = train.RawDelayTime,
+            DelayTime = train.DelayTime,
             NextStation = new StationEntity()
             {
-                StationTitle = train.NextStation.Title
+                StationTitle = train.NextStation!.Title
             },
             
-            CreatedAt = train.CreatedAt,
+            CreatedAt = DateTime.UtcNow,
+            LastDelayUpdateAt = DateTime.UtcNow
             
             
         };
@@ -52,15 +52,56 @@ public class TrainRepository : ITrainRepository
         await _context.SaveChangesAsync();
         
     }
-    
-
     public async Task ClearAllAsync()
     {
-        await _context.Database.ExecuteSqlRawAsync("DELETE FROM Incidents");
-        await _context.Database.ExecuteSqlRawAsync("ALTER TABLE Incidents AUTO_INCREMENT = 1");
+        var incidents = await _context.Incidents.ToListAsync();
+        _context.Incidents.RemoveRange(incidents);
 
-        await _context.Database.ExecuteSqlRawAsync("DELETE FROM Trains");
-        await _context.Database.ExecuteSqlRawAsync("ALTER TABLE Trains AUTO_INCREMENT = 1");
+        var trains = await _context.Trains.ToListAsync();
+        _context.Trains.RemoveRange(trains);
+
+        await _context.SaveChangesAsync();
+    }
+    public async Task DeactivateByIdAsync(long id)
+    {
+        
+        var train = await this.GetByIdAsync(id);
+        
+        if (train == null)
+            return;
+
+        train.IsActive = false;
+
+        if (train.Incidents != null && train.Incidents.Any())
+        {
+            foreach (var incident in train.Incidents)
+            {
+                incident.IsActive = false;
+            }
+        }
+
+        if (train.NextStation != null)
+        {
+            train.NextStation.IsActive = false;
+        }
+
+        await _context.SaveChangesAsync();
+        
+        
+    }
+    public async Task ChangeDelayTimeAsync(long id, int delayTime)
+    {
+        var trainEntity = await this.GetByIdAsync(id);
+        
+        if (trainEntity == null)
+            return;
+        
+        trainEntity.DelayTime = delayTime;
+        trainEntity.LastDelayUpdateAt = DateTime.UtcNow;
+        
+        
+        await _context.SaveChangesAsync();
+        
     }
 
 }

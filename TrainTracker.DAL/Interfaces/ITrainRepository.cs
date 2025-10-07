@@ -11,6 +11,12 @@ public interface ITrainRepository
      
      //Для удаления симуляционных данных
      Task ClearAllAsync();
+     
+     //Деактивация поездов из бд(что б не удалять на совсем)
+     Task DeactivateByIdAsync(long id);
+     
+     //Метод для смены задержки времени поезда
+     Task ChangeDelayTimeAsync(long id, int delayTime);
 
 
 }

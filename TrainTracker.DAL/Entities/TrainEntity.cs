@@ -13,7 +13,11 @@ public class TrainEntity
     
     public int DelayTime { get; set; } //data[0].returnValue.arrivingTime
     
-    public DateTime CreatedAt { get; set; } //время обновления
+    public DateTime CreatedAt { get; set; } //время создания
+    
+    public DateTime? LastDelayUpdateAt { get; set; } //время обновления
+    
+    public bool IsActive { get; set; } = true; // для удаления неактивных таблиц 
     
     // Связь 1:1 StationEntity
     public StationEntity? NextStation { get; set; } //data[0].returnValue.nextStopObj 
