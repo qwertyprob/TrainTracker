@@ -59,10 +59,10 @@ The sample JSON file includes the following key fields:
 ---
 ## Screenshots
 
-![img]("TrainTracker.Client/wwwroot/img/scrn/1.png")
-![img]("TrainTracker.Client/wwwroot/img/scrn/2.png")
-![img]("TrainTracker.Client/wwwroot/img/scrn/3.jpg")
-![img]("TrainTracker.Client/wwwroot/img/scrn/4.png")
+![img](TrainTracker.Client/wwwroot/img/scrn/1.png)
+![img](TrainTracker.Client/wwwroot/img/scrn/2.png)
+![img](TrainTracker.Client/wwwroot/img/scrn/3.jpg)
+![img](TrainTracker.Client/wwwroot/img/scrn/4.png)
 
 
 
