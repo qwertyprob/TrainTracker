@@ -20,9 +20,7 @@ jobs:
           MYSQL_DATABASE: traintrackerdb
           MYSQL_USER: tracker
           MYSQL_PASSWORD: trackerpass
-        # Убираем порты, используем внутреннюю сеть GitHub Actions
-        # ports:
-        #   - 3306:3306
+      
 
     steps:
       - name: Checkout repo
@@ -40,14 +38,8 @@ jobs:
       - name: Start services with docker compose
         run: docker compose -f docker-compose.yml up -d --build
 
-      - name: Wait for MariaDB to be ready
-        run: |
-          echo "Waiting for MariaDB..."
-          until docker exec $(docker ps -qf "name=mariadb") mysqladmin ping -u tracker -ptrackerpass --silent; do
-            echo "MariaDB is not ready yet..."
-            sleep 5
-          done
-          echo "MariaDB is ready!"
+      - name: Wait for MariaDB
+        run: sleep 20
 
       - name: Run backend tests (optional)
         run: |
