@@ -22,11 +22,7 @@ jobs:
           MYSQL_PASSWORD: trackerpass
         ports:
           - 3306:3306
-        options: >-
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-          # healthcheck можно убрать, просто оставить порты и env
+        # options удалены, healthcheck убран
 
     steps:
       - name: Checkout repo
