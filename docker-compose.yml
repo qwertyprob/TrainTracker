@@ -1,6 +1,6 @@
 ﻿services:
   backend:
-    image: train-api-container
+    image: train-api
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -13,7 +13,7 @@
       - "8080:8080"
 
   frontend:
-    image: train-frontend
+    image: train-client
     build:
       context: ./client
       dockerfile: Dockerfile

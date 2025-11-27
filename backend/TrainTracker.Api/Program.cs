@@ -21,6 +21,29 @@ builder.Services.AddFluentValidationAutoValidation();
 //IncidentValidator
 builder.Services.AddValidatorsFromAssemblyContaining<IncidentValidator>();
 
+//front
+var allowedOrigins = new[]
+{
+    "http://localhost:80",
+    "http://127.0.0.1:80",
+    "http://localhost:5174",
+    "http://127.0.0.1:5174",
+    "http://127.0.0.1:5173",
+    "http://localhost:5173"
+};
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(optionsCORS =>
+    {
+        optionsCORS
+            .WithOrigins(allowedOrigins)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+});
+
 
 // DB Context
 
@@ -71,11 +94,11 @@ if (!app.Environment.IsDevelopment())
 
 
 
-
 app.UseHttpsRedirection();
 
 // Роутинг
 app.UseRouting();
+app.UseCors(); 
 app.UseAuthorization();
 
 // Маршруты для API-контроллеров
