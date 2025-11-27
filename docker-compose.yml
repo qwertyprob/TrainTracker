@@ -2,7 +2,7 @@
   backend:
     image: train-api-container
     build:
-      context: ./src
+      context: ./backend
       dockerfile: Dockerfile
     depends_on:
       mariadb:
@@ -12,7 +12,20 @@
     ports:
       - "8080:8080"
 
-  #  frontend:
+  frontend:
+    image: train-frontend
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    environment:
+      BACKEND_HOST: backend
+      BACKEND_PORT: 8080
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+
 
   mariadb:
     image: mariadb:12.0.2
