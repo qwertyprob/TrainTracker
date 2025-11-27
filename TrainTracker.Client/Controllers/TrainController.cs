@@ -33,8 +33,6 @@ public class TrainController : Controller
     }
 
     
-   
-    
     
     public  IActionResult Trains()
     {

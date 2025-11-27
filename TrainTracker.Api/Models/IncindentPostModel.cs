@@ -1,6 +1,6 @@
 using TrainTracker.DTO;
 
-namespace TrainTracker.Models;
+namespace TrainTracker.Api.Models;
 
 public class IncidentPostModel
 {

@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.Client", "TrainTracker.Client\TrainTracker.Client.csproj", "{A8107FFD-6A5A-4D3A-91B6-B780B3391E02}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.DAL", "TrainTracker.DAL\TrainTracker.DAL.csproj", "{9E62585C-0242-4C62-908F-C2064EC5F490}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.BLL", "TrainTracker.BLL\TrainTracker.BLL.csproj", "{D687DBA6-FEE6-4FD3-8A28-E5BC2ED44AD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.DTO", "TrainTracker.DTO\TrainTracker.DTO.csproj", "{5EDABB85-A53D-4BAA-AD0F-0491A485EF79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainTracker.Api", "TrainTracker.Api\TrainTracker.Api.csproj", "{30715820-FA06-4E29-8D11-E1F4C8329A62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,10 +14,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A8107FFD-6A5A-4D3A-91B6-B780B3391E02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8107FFD-6A5A-4D3A-91B6-B780B3391E02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8107FFD-6A5A-4D3A-91B6-B780B3391E02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8107FFD-6A5A-4D3A-91B6-B780B3391E02}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9E62585C-0242-4C62-908F-C2064EC5F490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9E62585C-0242-4C62-908F-C2064EC5F490}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E62585C-0242-4C62-908F-C2064EC5F490}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,5 +26,9 @@ Global
 		{5EDABB85-A53D-4BAA-AD0F-0491A485EF79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EDABB85-A53D-4BAA-AD0F-0491A485EF79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EDABB85-A53D-4BAA-AD0F-0491A485EF79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30715820-FA06-4E29-8D11-E1F4C8329A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30715820-FA06-4E29-8D11-E1F4C8329A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30715820-FA06-4E29-8D11-E1F4C8329A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30715820-FA06-4E29-8D11-E1F4C8329A62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
