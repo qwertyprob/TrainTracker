@@ -1,21 +1,19 @@
-﻿
-
-services:
+﻿services:
   backend:
     image: train-api-container
     build:
-      context: .
-      dockerfile: TrainTracker.Api/Dockerfile
+      context: ./src
+      dockerfile: Dockerfile
     depends_on:
       mariadb:
         condition: service_healthy
     environment:
-        ConnectionStrings__MariaDbConnectionString: "server=mariadb;user=tracker;password=trackerpass;database=traintrackerdb;port=3306;"
+      ConnectionStrings__MariaDbConnectionString: "server=mariadb;user=tracker;password=trackerpass;database=traintrackerdb;port=3306;"
     ports:
-        - "8080:8080"
-        
-#  frontend:
-  
+      - "8080:8080"
+
+  #  frontend:
+
   mariadb:
     image: mariadb:12.0.2
     container_name: mariadb
@@ -32,11 +30,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-      
+
     volumes:
       - mariadb_data:/var/lib/mysql
-    
-    
-    
+
 volumes:
   mariadb_data:

@@ -33,6 +33,7 @@ public class IncidentService :IIncidentService
             //Mapping 
             var dtos = entities!.Select(e => new IncidentDto
             {
+                Id = e.Id,
                 Username = e.Username,
                 Reason = e.Reason,
                 Comment = e.Comment,
@@ -74,7 +75,9 @@ public class IncidentService :IIncidentService
             
 
             //Добавление 
-            await _incidentRepository.AddAsync(incidentDto, trainId);
+            var entity = await _incidentRepository.AddAsync(incidentDto, trainId);
+            
+            incidentDto.Id = entity.Id;
             
             //Увеличиваем время после добавления инцидента на 5 минут
             await _trainService.ChangeDelayTimeAsync(trainId,train.Data.DelayTime + 5);

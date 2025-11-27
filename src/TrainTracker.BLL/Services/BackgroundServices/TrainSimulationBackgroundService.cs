@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using TrainTracker.BLL.Interfaces;
@@ -55,11 +56,17 @@ public class TrainSimulationBackgroundService : BackgroundService
                     {
                         knownTrainIds.Add(train.Id);
                         await trainService.AddTrainAsync(train);
+                        
+                        if (knownTrainIds.Count == 17)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Refreshed!");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break; 
+                        }
                     }
-                    else
-                    {
-                        return;
-                    }
+
+                    
                     
 
                 }

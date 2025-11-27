@@ -23,15 +23,20 @@ builder.Services.AddValidatorsFromAssemblyContaining<IncidentValidator>();
 
 
 // DB Context
+
 var connectionString = builder.Configuration.GetConnectionString("MariaDbConnectionString");
+#if DEBUG
+    connectionString = builder.Configuration.GetConnectionString("LocalString");
+#endif
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseMySql(
-            connectionString,
-            new MariaDbServerVersion(new Version(12, 0, 2))
-        )
-        .LogTo(Console.WriteLine, LogLevel.Error); 
+        connectionString,
+        new MariaDbServerVersion(new Version(12, 0, 2))
+    );
 });
+
 
 // DI контейнеры
 // DAL
@@ -56,14 +61,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 //Automigration
-if (!app.Environment.IsDevelopment())
-{
+
+    
     using (var scope = app.Services.CreateScope())
     {
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         db.Database.Migrate();
     }
-}
+
+
+
 
 app.UseHttpsRedirection();
 

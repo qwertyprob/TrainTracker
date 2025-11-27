@@ -10,12 +10,10 @@ namespace TrainTracker.Api.Controllers;
 [Route("api/[controller]")]
 public class IncidentController : ControllerBase
 {
-    private readonly ITrainService _trainService;
     private readonly IIncidentService _incidentService;
 
-    public IncidentController(IIncidentService incidentService, ITrainService trainService)
+    public IncidentController(IIncidentService incidentService)
     {
-        _trainService = trainService;
         _incidentService = incidentService;
     }
     // Получить все инциденты конкретного поезда
@@ -27,17 +25,7 @@ public class IncidentController : ControllerBase
         return Ok(incidents);
     }
 
-    // Получить конкретный поезд с инцидентами
-    // GET: api/incident/{id}
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetTrain(int id)
-    {
-        var train = await _trainService.GetTrainByIdAsync(id);
-        if (train?.Data == null)
-            return NotFound(new { Message = "Train not found" });
-
-        return Ok(train.Data);
-    }
+    
 
     // POST: api/incident
     [HttpPost]
@@ -47,7 +35,16 @@ public class IncidentController : ControllerBase
         var validator = new IncidentValidator();
         var result = await validator.ValidateAsync(model.IncidentDto);
         if (!result.IsValid)
-            return BadRequest(result.Errors);
+        {
+            var errors = result.Errors
+                .Select(f => new
+                {
+                    property = f.PropertyName,
+                    message = f.ErrorMessage
+                });
+                
+            return BadRequest(errors);
+        }
 
         var response = await _incidentService.AddIncidentAsync(model.IncidentDto, model.TrainId);
         return Ok(response);

@@ -15,7 +15,19 @@ public class TrainController : ControllerBase
     {
         _trainService = trainService;
     }
+    
+    // Получить конкретный поезд с инцидентами
+    // GET: api/train/{id}
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetTrain(int id)
+    {
+        var train = await _trainService.GetTrainByIdAsync(id);
+        if (train?.Data == null)
+            return NotFound(new { Message = "Train not found" });
 
+        return Ok(train.Data);
+    }
+    
     // GET: api/train
     [HttpGet]
     public async Task<ActionResult<BaseResponseModel<IEnumerable<TrainDto>>>> LoadTrains()
