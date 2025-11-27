@@ -1,0 +1,42 @@
+﻿
+
+services:
+  backend:
+    image: train-api-container
+    build:
+      context: .
+      dockerfile: TrainTracker.Api/Dockerfile
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+        ConnectionStrings__MariaDbConnectionString: "server=mariadb;user=tracker;password=trackerpass;database=traintrackerdb;port=3306;"
+    ports:
+        - "8080:8080"
+        
+#  frontend:
+  
+  mariadb:
+    image: mariadb:12.0.2
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: traintrackerdb
+      MYSQL_USER: tracker
+      MYSQL_PASSWORD: trackerpass
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    
+    
+    
+volumes:
+  mariadb_data:

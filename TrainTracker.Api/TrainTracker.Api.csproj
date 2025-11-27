@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 <!--        <PublishAot>true</PublishAot>-->
     </PropertyGroup>
 
@@ -18,6 +19,12 @@
       <PackageReference Include="FluentValidation" Version="12.1.0" />
       <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
