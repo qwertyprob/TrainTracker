@@ -30,7 +30,7 @@ The sample JSON file includes the following key fields:
 
 ## Technical Requirements
 
-- **ASP.NET MVC (C#)** for backend and frontend
+- **ASP.NET CORE(C#)** for backend and React JS for frontend
 - **MariaDB** for storing trains and incidents
 - Simulated real-time updates by periodically reloading JSON data
 - Display the following for each train:
@@ -58,7 +58,7 @@ The sample JSON file includes the following key fields:
 ## Evaluation Criteria
 
 - Code clarity and maintainability
-- Proper use of ASP.NET MVC and MariaDB
+- Proper use of BACKEND,FRONTEND and MariaDB
 - Functional completeness
 - Usability and responsiveness of the UI
 - Correct handling of simulated real-time updates
