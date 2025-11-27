@@ -2,14 +2,15 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     services:
       mariadb:
         image: mariadb:12.0.2
@@ -21,36 +22,36 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd "mysqladmin ping -h localhost"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 3
+          --health-cmd="mysqladmin ping -h localhost --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
     steps:
-      - name: Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Set up Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '22'
-
-      - name: Build backend
+      - name: Build and run backend
         run: |
-          cd src/TrainTracker.Api
-          dotnet restore
-          dotnet build --configuration Release
+          docker build -t train-api-container ./backend
+          docker run -d --name backend --network host \
+            -e ConnectionStrings__MariaDbConnectionString="server=127.0.0.1;user=tracker;password=trackerpass;database=traintrackerdb;port=3306;" \
+            train-api-container
 
-      - name: Build frontend
+      - name: Wait for MariaDB to be healthy
         run: |
-          cd client
-          npm install
-          npm run build
+          until docker exec mariadb mysqladmin ping -h "localhost" --silent; do
+            echo "Waiting for database..."
+            sleep 5
+          done
 
-      - name: Build Docker containers
-        run: docker compose build
+      - name: Build and run frontend
+        run: |
+          docker build -t train-frontend ./client
+          docker run -d --name frontend -p 80:80 train-frontend
+
+      - name: Check running containers
+        run: docker ps
