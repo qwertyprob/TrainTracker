@@ -22,7 +22,6 @@ jobs:
           MYSQL_PASSWORD: trackerpass
         ports:
           - 3306:3306
-        # options удалены, healthcheck убран
 
     steps:
       - name: Checkout repo
@@ -38,7 +37,7 @@ jobs:
         run: docker build -t train-frontend ./client
 
       - name: Start services with docker-compose
-        run: docker-compose -f docker-compose.yml up -d --build
+        run: docker compose -f docker-compose.yml up -d --build
 
       - name: Wait for MariaDB to be ready
         run: |
@@ -55,4 +54,4 @@ jobs:
 
       - name: Tear down services
         if: always()
-        run: docker-compose down -v
+        run: docker compose down -v
