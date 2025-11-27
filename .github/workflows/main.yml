@@ -1,4 +1,4 @@
-name: CI
+name: Docker Compose CI
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     services:
       mariadb:
@@ -22,36 +22,47 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping -h localhost --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=10
+          --health-cmd="mysqladmin ping -h localhost -u tracker -ptrackerpass" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v2
 
-      - name: Build and run backend
+      - name: Log in to DockerHub (optional)
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push backend image
         run: |
           docker build -t train-api-container ./backend
-          docker run -d --name backend --network host \
-            -e ConnectionStrings__MariaDbConnectionString="server=127.0.0.1;user=tracker;password=trackerpass;database=traintrackerdb;port=3306;" \
-            train-api-container
 
-      - name: Wait for MariaDB to be healthy
+      - name: Build and push frontend image
         run: |
-          until docker exec mariadb mysqladmin ping -h "localhost" --silent; do
-            echo "Waiting for database..."
+          docker build -t train-frontend ./client
+
+      - name: Start docker-compose services
+        run: |
+          docker-compose -f docker-compose.yml up -d --build
+
+      - name: Wait for backend to be healthy
+        run: |
+          echo "Waiting for backend to be ready..."
+          until curl -s http://localhost:8080/health; do
             sleep 5
           done
 
-      - name: Build and run frontend
+      - name: Run tests (optional)
         run: |
-          docker build -t train-frontend ./client
-          docker run -d --name frontend -p 80:80 train-frontend
+          echo "You can add your integration tests here"
 
-      - name: Check running containers
-        run: docker ps
+      - name: Tear down
+        if: always()
+        run: docker-compose down -v
