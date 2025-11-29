@@ -4,6 +4,7 @@
     build:
       context: ./backend
       dockerfile: Dockerfile
+    container_name: backend
     depends_on:
       mariadb:
         condition: service_healthy
@@ -17,6 +18,7 @@
     build:
       context: ./client
       dockerfile: Dockerfile
+    container_name: frontend
     environment:
       BACKEND_HOST: backend
       BACKEND_PORT: 8080
