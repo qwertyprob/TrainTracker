@@ -15,6 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Подключаем только API-контроллеры
 builder.Services.AddControllers();
 
+//swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
 // Fluent Validation API
 builder.Services.AddFluentValidationAutoValidation();
 
@@ -75,14 +80,25 @@ builder.Services.AddSingleton<TrainJsonParser>();
 builder.Services.AddHostedService<TrainSimulationBackgroundService>();
 builder.Services.AddHostedService<TrainDelayUpdateBackgroundService>();
 
+
 var app = builder.Build();
 
 // HTTP pipeline
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/error"); // В API лучше общий endpoint для ошибок
+    app.UseExceptionHandler("/error");
+
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.DocumentTitle = "TrainApi";
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+        c.RoutePrefix = string.Empty; // Swagger на корне сайта
+    });
+
     app.UseHsts();
 }
+
 //Automigration
 
     

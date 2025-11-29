@@ -22,9 +22,10 @@ public class TrainController : ControllerBase
     public async Task<IActionResult> GetTrain(int id)
     {
         var train = await _trainService.GetTrainByIdAsync(id);
-        if (train?.Data == null)
-            return NotFound(new { Message = "Train not found" });
-
+        if (train?.Data?.RawId == null)
+            return NotFound(train);
+        
+        
         return Ok(train.Data);
     }
     
@@ -34,7 +35,13 @@ public class TrainController : ControllerBase
     {
         var model = await _trainService.GetAllTrainsAsync() 
                     ?? new BaseResponseModel<IEnumerable<TrainDto>>();
-        return Ok(model);
+
+        return model.StatusCode switch
+        {
+            404 => NotFound(model),
+            400 => BadRequest(model),
+            _ => Ok(model)
+        };
     }
     
 }
