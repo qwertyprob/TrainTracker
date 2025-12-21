@@ -18,6 +18,7 @@ public class TrainRepository : ITrainRepository
         return await _context.Trains
             .Include(station => station.NextStation)
             .Include(incidents => incidents.Incidents)
+            //.Where(x=>x.IsActive == true)
             .FirstOrDefaultAsync(train => train.Id == id);
 
     }

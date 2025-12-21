@@ -973,7 +973,6 @@
                     "adress": "AusekÄ¼a iela 1, Lielvarde",
                     "pvID": "298"
                 },
-                
                 "currentStopIndex": 11,
                 "updaterTimeStamp": "2025-09-30T06:59:44.369Z",
                 "departureTime": "2025-09-30 07:46:00",
@@ -4359,7 +4358,7 @@
                     24.41301946
                 ],
                 "waitingTime": 30000,
-                arrivingTime: 2,
+                "arrivingTime": 2,
                 "nextStopObj": {
                     "coords": [
                         57.06484354,

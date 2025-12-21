@@ -1,0 +1,98 @@
+$bg_blue: var(--bg-blue);
+$black: var(--black);
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg_blue;
+  color: whitesmoke;
+  padding: 0 1rem;
+  height: 140px;
+
+  position: sticky; 
+  top: 0; 
+  z-index: 1000;
+}
+
+.container {
+  max-width: 1200px; 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 1rem; 
+}
+
+.trainLogo {
+  margin-right: 1rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trainString {
+  flex: 1;
+  text-align: center;
+  color: white;
+  font-size: clamp(1rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+}
+
+.trainText {
+  color: $black;
+}
+
+.circle {
+  width: 90px;
+  height: 90px;
+
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+.img-logo {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.img-logo.loaded {
+  opacity: 1;
+}
+
+.circle:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  background-color: whitesmoke;
+}
+
+.circle:focus,
+.circle:active {
+  background-color: lightgrey;
+  transform: scale(0.98);
+}
+
+
+@media (max-width: 766px) {
+  .trainLogo {
+    .img-logo {
+      width: 50px !important;
+      height: 50px !important;
+    }
+  }
+
+  .circle {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  .header {
+    height: 4rem;
+    justify-content: center;
+  }
+}

@@ -13,19 +13,19 @@
     ports:
       - "8080:8080"
 
-  frontend:
-    image: train-client
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    container_name: frontend
-    environment:
-      BACKEND_HOST: backend
-      BACKEND_PORT: 8080
-    depends_on:
-      - backend
-    ports:
-      - "80:80"
+  # frontend:
+  #   image: train-client
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #   container_name: frontend
+  #   environment:
+  #     BACKEND_HOST: backend
+  #     BACKEND_PORT: 8080
+  #   depends_on:
+  #     - backend
+  #   ports:
+  #     - "3000:3000"
 
 
 
