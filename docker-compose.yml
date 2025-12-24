@@ -2,7 +2,7 @@
   backend:
     image: train-api
     build:
-      context: ./backend
+      context: ./apps/backend
       dockerfile: Dockerfile
     container_name: backend
     depends_on:
@@ -16,7 +16,7 @@
   # frontend:
   #   image: train-client
   #   build:
-  #     context: ./client
+  #     context: ./apps/client
   #     dockerfile: Dockerfile
   #   container_name: frontend
   #   environment:
@@ -26,8 +26,6 @@
   #     - backend
   #   ports:
   #     - "3000:3000"
-
-
 
   mariadb:
     image: mariadb:12.0.2
@@ -40,7 +38,7 @@
     ports:
       - "3306:3306"
     healthcheck:
-      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       start_period: 10s
       interval: 10s
       timeout: 5s
