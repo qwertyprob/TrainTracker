@@ -5,6 +5,7 @@ import { HTTP_STATUS } from "@/constants/statusCodes";
 import { fetchTrainsWithShortDelay } from "@/lib/api";
 import type { ApiResponse } from "@/types/api";
 import type { Train } from "@/types/train";
+import NoData from "../noData";
 
 const REFRESH_INTERVAL = 15_000;
 
@@ -48,11 +49,7 @@ export default function ArrivingTrains() {
   }
 
   if (!response || response.data?.length === 0) {
-    return (
-      <div className="text-sm text-gray-500 p-3 text-center">
-        No arriving trains
-      </div>
-    );
+    return <NoData />;
   }
 
   return (
