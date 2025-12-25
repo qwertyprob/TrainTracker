@@ -46,7 +46,7 @@ export default function Header() {
 
       {/* Info блок */}
       <div className="w-full m-0 overflow-hidden border-0  shadow-xs">
-        <RunningText text={text} />
+        <RunningText />
       </div>
     </header>
   );
