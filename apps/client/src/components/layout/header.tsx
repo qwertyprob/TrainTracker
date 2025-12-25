@@ -35,7 +35,7 @@ export default function Header() {
           </div>
 
           {/* LIVE UPDATES */}
-          <div className="flex items-center sm:justify-start bg-red-200 rounded-2xl p-1 sm:p-2 mt-2 sm:mt-0">
+          <div className="flex items-center sm:justify-start bg-gray-200 rounded-2xl p-1 sm:p-2 mt-2 sm:mt-0">
             <RedDot />
             <span className="text-2x1 sm:text-sm font-medium ml-1 whitespace-nowrap text-gray-600">
               LIVE UPDATES
