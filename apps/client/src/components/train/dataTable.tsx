@@ -1,6 +1,13 @@
 "use client";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import * as React from "react";
+import { useEffect, useState } from "react";
+import { HTTP_STATUS } from "@/constants/statusCodes";
+import { fetchTrainsApi } from "@/lib/api";
+import type { ApiResponse } from "@/types/api";
+import type { Train } from "@/types/train";
+import NoData from "../noData";
+
+const REFRESH_INTERVAL = 15_000;
+
 import {
   Table,
   TableBody,
@@ -9,74 +16,82 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-
-type DataRow = {
-  id: number;
-  name: string;
-  status: string;
-  date: string;
-};
-
-const sampleData: DataRow[] = [
-  { id: 1, name: "Train A", status: "On Time", date: "2025-12-25" },
-  { id: 2, name: "Train B", status: "Delayed", date: "2025-12-25" },
-  { id: 3, name: "Train C", status: "Cancelled", date: "2025-12-25" },
-  { id: 42, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 4222122, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 43222, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 422212312, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 4221231232, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 422222, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 42222, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 4333, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 4444, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 455, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 466, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 477, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 47, name: "Train D", status: "On Time", date: "2025-12-25" },
-  { id: 4, name: "Train D", status: "On Time", date: "2025-12-25" },
-];
+import { Spinner } from "../ui/spinner";
 
 export default function DataTable() {
-  const [data, setData] = React.useState<DataRow[]>(sampleData);
-  const [sortAsc, setSortAsc] = React.useState(true);
+  const [response, setResponse] = useState<ApiResponse<Train[]> | null>(null);
+  const [loading, setLoading] = useState(true);
+  let counter = 0;
+  useEffect(() => {
+    let isMounted = true;
 
-  const sortByName = () => {
-    const sorted = [...data].sort((a, b) =>
-      sortAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
+    const fetchTrains = async () => {
+      try {
+        const res = await fetchTrainsApi();
+        if (isMounted && res.status === HTTP_STATUS.OK) {
+          setResponse(res);
+        }
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    // initial fetch
+    fetchTrains();
+
+    // repeat every 15sec
+    const intervalId = setInterval(fetchTrains, REFRESH_INTERVAL);
+
+    // cleanup
+    return () => {
+      isMounted = false;
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="text-sm text-gray-500 p-3  h-75 flex justify-center items-center">
+        <Spinner />
+      </div>
     );
-    setData(sorted);
-    setSortAsc(!sortAsc);
-  };
+  }
+
+  if (!response || response.data?.length === 0) {
+    return (
+      <div className="pt-10">
+        <NoData />
+      </div>
+    );
+  }
 
   return (
-    <div className="p-4 bg-white rounded-2xl overflow-y-auto h-64">
+    <div className="bg-white rounded-2xl shrink-0 overflow-auto h-75 cursor-pointer">
       <Table>
-        <TableHeader className="sticky top-0 bg-white z-10">
-          <TableRow>
-            <TableHead>ID</TableHead>
-            <TableHead>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="p-0"
-                onClick={sortByName}
-              >
-                Name {sortAsc ? "↑" : "↓"}
-              </Button>
-            </TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Date</TableHead>
+        <TableHeader className="bg-gray-100  hover:bg-gray-50 duration-300 ease-in">
+          <TableRow className="text-center font-bold">
+            <TableHead>N</TableHead>
+            <TableHead>Number</TableHead>
+            <TableHead>Train</TableHead>
+            <TableHead>Arriving</TableHead>
+            <TableHead>Next station</TableHead>
           </TableRow>
         </TableHeader>
+
         <TableBody>
-          {data.map((row) => (
+          {response.data?.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.id}</TableCell>
+              <TableCell>{++counter}</TableCell>
+              <TableCell>{row.number}</TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.status}</TableCell>
-              <TableCell>{row.date}</TableCell>
+              <TableCell
+                className={`font-semibold ${
+                  row.delayTime === 0 ? "text-green-600" : "text-gray-600"
+                }`}
+              >
+                {row.delayTime === 0 ? "Now" : `${row.delayTime} min`}
+              </TableCell>
+              <TableCell>{row.nextStation.title}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -4,11 +4,9 @@ import { mapTrain } from "@/lib/mappers/train";
 import type { Train } from "@/types/train";
 import type { ApiResponse } from "@/types/api";
 
-
 const api = new ApiClient({ baseUrl: API_URL, timeout: API_TIMEOUT });
 
 export async function fetchTrainsApi(): Promise<ApiResponse<Train[]>> {
-
   const res = await api.get<Train[]>("/train");
 
   //mapping
@@ -31,6 +29,17 @@ export async function fetchTrainsWithShortDelay(): Promise<
 
   return {
     ...res,
-    data: res.data?.filter((train) => train.delayTime < 5) ?? [],
+    data: res.data?.filter((train) => train.delayTime <= 5) ?? [],
+  };
+}
+
+export async function fetchTrainsWithZeroDelay(): Promise<
+  ApiResponse<Train[]>
+> {
+  const res = await api.get<Train[]>("/train");
+
+  return {
+    ...res,
+    data: res.data?.filter((train) => train.delayTime <= 1) ?? [],
   };
 }
