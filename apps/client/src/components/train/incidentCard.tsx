@@ -2,36 +2,43 @@
 
 import { useEffect, useState } from "react";
 import { HTTP_STATUS } from "@/constants/statusCodes";
-import { fetchTrainsApi } from "@/lib/api";
+import { fetchIncidents, fetchTrainsApi } from "@/lib/api";
 import type { ApiResponse } from "@/types/api";
-import type { Train } from "@/types/train";
+
+import type { Incident } from "@/types/incident";
 
 import { Spinner } from "../ui/spinner";
 import { FiInbox } from "react-icons/fi";
 import { PiWarning } from "react-icons/pi";
+import { Train } from "@/types/train";
 
 const REFRESH_INTERVAL = 15_000;
 
 export default function IncidentCard() {
-  const [response, setResponse] = useState<ApiResponse<Train[]> | null>(null);
+  const [response, setResponse] = useState<ApiResponse<Incident[]> | null>(
+    null
+  );
+  const [trains, setTrains] = useState<ApiResponse<Train[]> | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
 
-    const fetchTrains = async () => {
+    const fetchIncidentsAndTrains = async () => {
       try {
-        const res = await fetchTrainsApi();
+        const res = await fetchIncidents();
+        const trainRes = await fetchTrainsApi();
         if (isMounted && res.status === HTTP_STATUS.OK) {
           setResponse(res);
+          setTrains(trainRes);
         }
       } finally {
         if (isMounted) setLoading(false);
       }
     };
 
-    fetchTrains();
-    const intervalId = setInterval(fetchTrains, REFRESH_INTERVAL);
+    fetchIncidentsAndTrains();
+    const intervalId = setInterval(fetchIncidentsAndTrains, REFRESH_INTERVAL);
 
     return () => {
       isMounted = false;
@@ -48,12 +55,8 @@ export default function IncidentCard() {
     );
   }
 
-  /* ---------- normalize incidents ---------- */
-  const incidents =
-    response?.data?.flatMap((train) => train.incidents ?? []) ?? [];
-
   /* ---------- empty state ---------- */
-  if (incidents.length === 0) {
+  if (response?.data?.length === 0) {
     return (
       <div className="h-64 flex flex-col justify-center items-center gap-3 text-gray-400">
         <FiInbox size={72} />
@@ -64,7 +67,7 @@ export default function IncidentCard() {
   /* ---------- incidents ---------- */
   return (
     <div className="flex flex-col gap-4 items-center  mt-5">
-      {incidents.map((incident) => (
+      {response?.data?.map((incident) => (
         <div
           key={incident.id}
           className="
@@ -86,7 +89,8 @@ export default function IncidentCard() {
 
           <div className="flex flex-col">
             <span className="text-sm font-semibold text-red-700">
-              Incident: {incident.reason}
+              Incident: {incident.reason} on train:{" "}
+              {trains?.data?.find((x) => x.id === incident.trainId)?.name}
             </span>
             <span className="text-gray-800">
               Created by: {incident.username}

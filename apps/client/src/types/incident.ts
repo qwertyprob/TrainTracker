@@ -3,4 +3,5 @@ export type Incident = {
   username: string;
   reason: string;
   comment: string;
+  trainId: number;
 };
