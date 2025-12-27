@@ -1,4 +1,5 @@
 using TrainTracker.BLL.Interfaces;
+using TrainTracker.DAL.Entities;
 using TrainTracker.DAL.Interfaces;
 using TrainTracker.DTO;
 
@@ -14,11 +15,12 @@ public class IncidentService :IIncidentService
         _trainService = trainService;
 
     }
-    public async Task<BaseResponseModel<List<IncidentDto>>> GetAllIncidentsAsync(long trainId)
+    public async Task<BaseResponseModel<List<IncidentDto>>> GetAllIncidentsAsync(long trainId = 0)
     {
+        
         try
         {
-            var entities = await _incidentRepository.GetAllByTrainAsync(trainId);
+             var entities = trainId == 0?await _incidentRepository.GetAllAsync()  : await _incidentRepository.GetAllByTrainAsync(trainId);
 
             if (entities == null || !entities.Any())
             {
@@ -37,7 +39,9 @@ public class IncidentService :IIncidentService
                 Username = e.Username,
                 Reason = e.Reason,
                 Comment = e.Comment,
-                CreatedAt = e.CreatedAt
+                CreatedAt = e.CreatedAt,
+                TrainId = e.TrainId
+
                 
             }).OrderBy(x=>x.CreatedAt)
                 .ToList();

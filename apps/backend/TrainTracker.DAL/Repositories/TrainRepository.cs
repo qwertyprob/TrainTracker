@@ -64,31 +64,20 @@ public class TrainRepository : ITrainRepository
     }
     public async Task DeactivateByIdAsync(long id)
     {
-        
-        var train = await this.GetByIdAsync(id);
-        
+        var train = await _context.Trains.FindAsync(id);
+
         if (train == null)
             return;
 
         train.IsActive = false;
 
-        if (train.Incidents != null && train.Incidents.Any())
-        {
-            foreach (var incident in train.Incidents)
-            {
-                incident.IsActive = false;
-            }
-        }
-
-        if (train.NextStation != null)
-        {
-            train.NextStation.IsActive = false;
-        }
+        await _context.Incidents
+            .Where(i => i.TrainId == id)
+            .ExecuteDeleteAsync(); 
 
         await _context.SaveChangesAsync();
-        
-        
     }
+
     public async Task ChangeDelayTimeAsync(long id, int delayTime)
     {
         var trainEntity = await this.GetByIdAsync(id);

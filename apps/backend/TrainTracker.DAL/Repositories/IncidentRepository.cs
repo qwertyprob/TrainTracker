@@ -15,9 +15,16 @@ public class IncidentRepository: IIncidentRepository
         _context = context;
     }
 
+    public async Task<IEnumerable<IncidentEntity>> GetAllAsync()
+    {
+        return await _context.Incidents
+            .ToListAsync();
+    }
+
     public async Task<IncidentEntity?> GetByIdAsync(int id)
     {
         return await _context.Incidents
+            .Where(x=> x.IsActive == true)
             .FirstOrDefaultAsync(x => x.Id== id);
     }
     
@@ -25,6 +32,7 @@ public class IncidentRepository: IIncidentRepository
     {
         var train = await _context.Trains
             .Include(i => i.Incidents)
+            .Where(x=> x.IsActive == true)
             .FirstOrDefaultAsync(x => x.Id == trainId);
 
         if (train == null)

@@ -5,6 +5,7 @@ namespace TrainTracker.DAL.Interfaces;
 
 public interface IIncidentRepository
 {
+    Task<IEnumerable<IncidentEntity>> GetAllAsync();
     Task<IncidentEntity?> GetByIdAsync(int id);
     
     Task<IEnumerable<IncidentEntity>> GetAllByTrainAsync(long trainId);

@@ -12,5 +12,7 @@ public class IncidentDto
     
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     
+    public long TrainId { get; set; }
+    
     public bool IsActive { get; set; } = true;
 }
