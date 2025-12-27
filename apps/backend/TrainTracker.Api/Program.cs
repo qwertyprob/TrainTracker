@@ -31,23 +31,27 @@ var allowedOrigins = new[]
 {
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://localhost:5174",
-    "http://127.0.0.1:5174",
+    "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "http://localhost:5173"
 };
+// builder.Services.AddCors(options =>
+// {
+//     options.AddPolicy("AllowFrontend", policy =>
+//     {
+//         policy.WithOrigins(allowedOrigins)
+//               .AllowAnyHeader()
+//               .AllowAnyMethod()
+//               .AllowCredentials();
+//     });
+// })
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(optionsCORS =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
-        optionsCORS
-            .WithOrigins(allowedOrigins)
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
-});
+})
 
 
 // DB Context
@@ -114,7 +118,7 @@ app.UseHttpsRedirection();
 
 // Роутинг
 app.UseRouting();
-app.UseCors(); 
+app.UseCors("AllowFrontend");
 app.UseAuthorization();
 
 // Маршруты для API-контроллеров
