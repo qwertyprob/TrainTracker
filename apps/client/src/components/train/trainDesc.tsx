@@ -91,13 +91,13 @@ export default function ArrivedTrainsCarousel() {
       <CarouselContent className="flex gap-4">
         {response.data?.map((train) => (
           <CarouselItem key={train.id}>
-            <Card className="flex m-0 mx-2 border-0 cursor-grab rounded-2xl shadow-md mb-4  hover:shadow-lg transition-all duration-300 ease-in-out bg-white border border-gray-200">
-              <CardContent className="flex justify-between items-center p-5">
+            <Card className="flex m-0 mx-2  border-0 cursor-grab rounded-2xl shadow-md mb-4  hover:shadow-lg transform scale-50) transition-all duration-300 ease-in-out bg-white ">
+              <CardContent className="flex justify-between items-center p-10 ">
                 {/* Левый блок с информацией */}
                 <div className="flex flex-col space-y-3">
                   {/* Верхняя строка: Иконка + Название + ID */}
                   <div className="flex items-center space-x-3">
-                    <FaTrain className="text-blue-600 text-2xl" />
+                    <FaTrain className="text-blue-800 text-4xl" />
                     <div className="flex flex-col">
                       <div className="text-xl font-semibold text-gray-900">
                         {train.name}
@@ -111,7 +111,7 @@ export default function ArrivedTrainsCarousel() {
                   {/* Номер поезда */}
                   <div className="text-sm text-gray-600">
                     Number:{" "}
-                    <span className="ml-2 inline-block bg-blue-50 text-blue-700 px-3 py-0.5 rounded-lg font-medium shadow-sm">
+                    <span className="ml-2 inline-block bg-blue-50 text-blue-600  px-3 py-0.5 rounded-lg font-bold shadow-sm">
                       #{train.number}
                     </span>
                   </div>
@@ -120,7 +120,7 @@ export default function ArrivedTrainsCarousel() {
                   {train.nextStation.title && (
                     <div className="text-sm text-gray-500">
                       Next station:{" "}
-                      <span className="ml-1 font-medium text-gray-700">
+                      <span className="ml-1 font-bold text-gray-700">
                         {train.nextStation.title}
                       </span>
                     </div>

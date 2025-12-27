@@ -1,5 +1,6 @@
 import ArrivingTrains from "@/components/train/arrivingCard";
 import DataTable from "@/components/train/dataTable";
+import IncidentCard from "@/components/train/incidentCard";
 import ArrivedTrainsCarousel from "@/components/train/trainDesc";
 
 export default function Home() {
@@ -25,14 +26,14 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col w-full md:w-[80%] gap-4 flex-1">
+        <div className="flex flex-col w-full md:w-[100%] gap-4 flex-1">
           <div className="flex justify-center p-0  sm:p-4 ">
             <ArrivedTrainsCarousel />
           </div>
 
-          <div className="bg-white rounded-2xl p-4 flex-1 flex flex-col">
+          <div className="bg-white rounded-2xl p-4 flex-1 flex flex-col  ">
             <div className="flex-1 min-h-full ">
-              <DataTable />
+              <IncidentCard />
             </div>
           </div>
         </div>

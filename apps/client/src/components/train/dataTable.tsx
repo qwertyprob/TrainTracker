@@ -66,7 +66,7 @@ export default function DataTable() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shrink-0 overflow-auto h-75 cursor-pointer">
+    <div className="bg-white rounded-2xl shrink-0 overflow-auto  h-75 cursor-pointer">
       <Table>
         <TableHeader className="bg-gray-100  hover:bg-gray-50 duration-300 ease-in">
           <TableRow className="text-center font-bold">

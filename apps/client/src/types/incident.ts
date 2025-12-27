@@ -1,6 +1,6 @@
 export type Incident = {
   id: number;
-  userName: string;
+  username: string;
   reason: string;
   comment: string;
 };

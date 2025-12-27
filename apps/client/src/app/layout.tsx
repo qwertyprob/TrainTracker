@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} antialiased`}>
+      <body className={`font-sans ${inter.variable} antialiase`}>
         <Header />
         <main className="pt-[22vh] sm:pt-[20vh]  rounded-2xl">{children}</main>
         <Footer />
