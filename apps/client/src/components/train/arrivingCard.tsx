@@ -60,14 +60,14 @@ export default function ArrivingTrains() {
   return (
     <div className="p-3">
       <div
-        className="flex flex-col gap-2 
+        className="flex flex-col gap-2
                   md:max-h-[80vh] md:overflow-y-auto 
-                  md:w-full md:max-w-full"
+                  md:w-full md:max-w-full "
       >
         {response.data?.slice(0, 4).map((train) => (
           <div
             key={train.id}
-            className="flex items-center justify-between bg-white rounded-xl px-3 py-2 shadow-sm border-l-4 w-full"
+            className="flex items-center justify-between bg-white rounded-xl px-3 py-2 shadow-sm border-l-4 w-full hover:bg-green-50 duration-300 ease-in"
           >
             <div>
               <p className="text-xs text-gray-500 leading-none">

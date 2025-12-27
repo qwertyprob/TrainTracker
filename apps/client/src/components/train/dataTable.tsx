@@ -21,7 +21,6 @@ import { Spinner } from "../ui/spinner";
 export default function DataTable() {
   const [response, setResponse] = useState<ApiResponse<Train[]> | null>(null);
   const [loading, setLoading] = useState(true);
-  let counter = 0;
   useEffect(() => {
     let isMounted = true;
 
@@ -70,7 +69,6 @@ export default function DataTable() {
       <Table>
         <TableHeader className="bg-gray-100  hover:bg-gray-50 duration-300 ease-in">
           <TableRow className="text-center font-bold">
-            <TableHead>N</TableHead>
             <TableHead>Number</TableHead>
             <TableHead>Train</TableHead>
             <TableHead>Arriving</TableHead>
@@ -81,7 +79,6 @@ export default function DataTable() {
         <TableBody>
           {response.data?.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{++counter}</TableCell>
               <TableCell>{row.number}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell

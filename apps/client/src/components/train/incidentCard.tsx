@@ -71,19 +71,23 @@ export default function IncidentCard() {
         <div
           key={incident.id}
           className="
-            w-full
-            flex items-center gap-4
-            p-2 rounded-xl
-            bg-red-50 border border-orange-100
-            shadow-sm w-full 
-  max-w-[100%]       
-  sm:max-w-[450px]  
-  md:max-w-[380px]  
-  lg:max-w-[500px]  
-  xl:max-w-[600px]  
-  2xl:max-w-[700px] 
+      w-full
+      flex items-center gap-4
+      p-2 rounded-xl
+      bg-red-50 border border-orange-100
+      shadow-sm
+      w-full
+      max-w-[100%]       
+      sm:max-w-[450px]  
+      md:max-w-[380px]  
+      lg:max-w-[500px]  
+      xl:max-w-[600px]  
+      2xl:max-w-[700px]
 
-          "
+      transform transition-transform duration-200 ease-in-out
+      hover:scale-105
+      hover:shadow-lg
+    "
         >
           <PiWarning size={36} className="text-red-700 shrink-0" />
 

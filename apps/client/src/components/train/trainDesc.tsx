@@ -11,12 +11,11 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { FaTrain } from "react-icons/fa";
+import { IoTrainOutline } from "react-icons/io5";
 import type { ApiResponse } from "@/types/api";
 import type { Train } from "@/types/train";
 import { HTTP_STATUS } from "@/constants/statusCodes";
 import { fetchTrainsWithZeroDelay } from "@/lib/api";
-import NoData from "../noData";
 import { Spinner } from "../ui/spinner";
 
 const REFRESH_INTERVAL = 15_000;
@@ -97,7 +96,7 @@ export default function ArrivedTrainsCarousel() {
                 <div className="flex flex-col space-y-3">
                   {/* Верхняя строка: Иконка + Название + ID */}
                   <div className="flex items-center space-x-3">
-                    <FaTrain className="text-blue-800 text-4xl" />
+                    <IoTrainOutline className="text-blue-800 text-4xl" />
                     <div className="flex flex-col">
                       <div className="text-xl font-semibold text-gray-900">
                         {train.name}

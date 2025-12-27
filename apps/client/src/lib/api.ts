@@ -9,6 +9,7 @@ import type { ApiResponse } from "@/types/api";
 const api = new ApiClient({ baseUrl: API_URL, timeout: API_TIMEOUT });
 
 export async function fetchTrainsApi(): Promise<ApiResponse<Train[]>> {
+  console.log("api-url:" + API_URL);
   const res = await api.get<Train[]>("/train");
 
   return {
