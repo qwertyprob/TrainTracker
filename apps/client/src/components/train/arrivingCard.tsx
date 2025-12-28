@@ -67,7 +67,7 @@ export default function ArrivingTrains() {
         {response.data?.slice(0, 4).map((train) => (
           <div
             key={train.id}
-            className="flex items-center justify-between bg-white rounded-xl px-3 py-2 shadow-sm border-l-4 w-full hover:bg-green-50 duration-300 ease-in"
+            className="flex items-center justify-between bg-white rounded-xl px-3 py-2 shadow-sm border-l-4 w-full hover:bg-green-50 duration-300 ease-in "
           >
             <div>
               <p className="text-xs text-gray-500 leading-none">
